@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "350609035141",
+    "project_id": "findfootball-d99d6",
+    "storage_bucket": "findfootball-d99d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350609035141:android:b76fd1e0f73aa4f1d67eec",
+        "android_client_info": {
+          "package_name": "uz.dasuty.find_football"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIB30JiK07LUDmgnC9YBz3uEf1sLS-7yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
