@@ -36,7 +36,7 @@ class _RootViewState extends State<RootView> {
     bool isInitialPage = true;
     return AutoTabsRouter(
       homeIndex: 1,
-      routes: [
+      routes: const [
         HistoryView(),
         HomeView(),
         FavoriteView(),

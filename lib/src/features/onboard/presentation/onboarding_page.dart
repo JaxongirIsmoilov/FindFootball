@@ -27,41 +27,44 @@ class _OnBoardingPageState extends State<OnBoardingView> {
     _currentPage = 0;
     super.initState();
   }
+
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
           PageView.builder(
-              controller: _scrollController,
-              onPageChanged: (pageIndex) {
-                setState(() {
-                  _currentPage = pageIndex;
-                });
-              },
-              itemCount: demoData.length,
-              itemBuilder: (ctx, index) {
-                log('Image Path -->  ${demoData[index]['image']}');
-                return Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                          demoData[index]['image'],
-                        ),
-                        fit: BoxFit.cover),
-                  ),
-                  child: Center(
-                    child: OnBoard(
-                        title: demoData[index]['title'],
-                        description: demoData[index]['description']),
-                  ),
-                );
-              }),
+            controller: _scrollController,
+            onPageChanged: (pageIndex) {
+              setState(() {
+                _currentPage = pageIndex;
+              });
+            },
+            itemCount: demoData.length,
+            itemBuilder: (ctx, index) {
+              log('Image Path -->  ${demoData[index]['image']}');
+              return Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(
+                        demoData[index]['image'],
+                      ),
+                      fit: BoxFit.cover),
+                ),
+                child: Center(
+                  child: OnBoard(
+                      title: demoData[index]['title'],
+                      description: demoData[index]['description']),
+                ),
+              );
+            },
+          ),
           Positioned(
             bottom: 200,
             left: 0,
@@ -70,11 +73,10 @@ class _OnBoardingPageState extends State<OnBoardingView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
                 demoData.length,
-                    (index) => AnimatedDot(isActive: _currentPage == index),
+                (index) => AnimatedDot(isActive: _currentPage == index),
               ),
             ),
           ),
-
           Positioned(
             bottom: 30,
             left: 0,

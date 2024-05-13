@@ -27,6 +27,7 @@ class _SplashViewState extends State<SplashView> with AfterLayoutMixin {
   }
 
   Future<void> authCheck() async {
+    //
     await context.replaceRoute(const OnBoardingView());
   }
 

@@ -11,6 +11,8 @@ class HiveService{
 
   static final box = Hive.box('AppBox');
 
+  // Theme change
+
   static Future<void> saveTheme(bool isDark) async {
     await box.put(BoxConsts.themeKey, isDark);
   }
@@ -24,6 +26,9 @@ class HiveService{
     await box.delete(BoxConsts.themeKey);
   }
 
+
+  // Is User Verified
+
   static Future<void> saveVerifiedUser(bool isVerifiedUser) async {
     await box.put(BoxConsts.verifiedUserKey, isVerifiedUser);
   }
@@ -35,6 +40,47 @@ class HiveService{
   static Future<bool> isUserVerified() async {
     var result =  await box.get(BoxConsts.verifiedUserKey) ?? false;
     return result;
+  }
+
+  //Access token
+  static Future<void> saveAccessToken(String accessToken) async {
+    await box.put(BoxConsts.accessToken, accessToken) ;
+  }
+
+  static Future<void> removeAccessToken() async{
+    await box.delete(BoxConsts.accessToken);
+  }
+
+  static Future<String> getAccessToken() async{
+    return await box.get(BoxConsts.accessToken) ?? "";
+  }
+
+  // Refresh Token
+
+  static Future<void> saveRefreshToken(String refreshToken) async{
+    await box.put(BoxConsts.refreshToken, refreshToken);
+  }
+
+  static Future<void> removeRefreshToken() async{
+    await box.delete(BoxConsts.refreshToken);
+  }
+
+  static Future<String> getRefreshToken() async {
+    return await box.get(BoxConsts.refreshToken) ?? "";
+  }
+
+
+  //Otp
+  static Future<void> saveOtpToken(String otpToken) async {
+    await box.put(BoxConsts.otpToken, otpToken);
+  }
+
+  static Future<void> deleteOtpToken() async {
+    await box.delete(BoxConsts.otpToken);
+  }
+
+  static Future<String> getOtpToken() async {
+    return await box.get(BoxConsts.otpToken) ?? "";
   }
 
 }
