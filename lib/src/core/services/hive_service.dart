@@ -83,4 +83,18 @@ class HiveService{
     return await box.get(BoxConsts.otpToken) ?? "";
   }
 
+  // User Id
+  static Future<void> saveUserId(String userId) async {
+    await box.put(BoxConsts.userId, userId);
+  }
+
+  static Future<void> removeUserId() async {
+    await box.delete(BoxConsts.userId);
+  }
+
+  static Future<String> getUserId() async {
+    return await box.get(BoxConsts.userId) ?? "";
+  }
+
+
 }

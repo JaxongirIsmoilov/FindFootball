@@ -1,3 +1,4 @@
+import 'package:find_football/src/core/consts/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,6 +23,7 @@ class CustomSearchBar extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         keyboardType: TextInputType.name,
+        style: const TextStyle(color: AppColors.textColor),
         decoration: InputDecoration(
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(

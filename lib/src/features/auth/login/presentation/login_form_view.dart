@@ -39,7 +39,7 @@ class _LoginFormViewState extends State<LoginFormView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
+    return BlocBuilder<LoginBloc, AuthState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.black,
@@ -201,9 +201,7 @@ class _LoginFormViewState extends State<LoginFormView> {
                               text: "Sign In",
                               textColor: Colors.white,
                               onTap: () {
-                                context.replaceRoute(
-                                  RootView(),
-                                );
+                                di<LoginBloc>().add(LoginEvent(buildContext: context, login: _loginController.text.trim(), password: _passwordController.text.trim(),),);
                               }),
                           const Spacer(),
                         ],
@@ -228,7 +226,9 @@ class _LoginFormViewState extends State<LoginFormView> {
                       .copyWith(color: Colors.grey),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushRoute(RegisterFormView());
+                  },
                   child: Text(
                     'Register',
                     style: Theme.of(context)

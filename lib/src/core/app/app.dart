@@ -1,4 +1,5 @@
 import 'package:find_football/src/core/router/router.dart';
+import 'package:find_football/src/features/auth/confirmation/presentation/verify_bloc/verify_bloc.dart';
 import 'package:find_football/src/features/auth/login/presentation/login_bloc/login_bloc.dart';
 import 'package:find_football/src/features/auth/register/presentation/register_bloc/register_bloc.dart';
 import 'package:find_football/src/features/theme/presentation/cubit/theme_cubit.dart';
@@ -31,7 +32,7 @@ class App extends StatelessWidget with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     // FocusScope.of(context).unfocus();
     WidgetsBinding.instance.addObserver(this);
-    FocusManager.instance.primaryFocus?.unfocus();
+    // FocusManager.instance.primaryFocus?.unfocus();
     int getDeviceType() {
       final data = MediaQueryData.fromView(WidgetsBinding.instance.window);
       AppUtils.isTable = data.size.shortestSide < 600 ? false : true;
@@ -52,6 +53,9 @@ class App extends StatelessWidget with WidgetsBindingObserver {
             ),
             BlocProvider<RegisterBloc>.value(
               value: di.get<RegisterBloc>(),
+            ),
+            BlocProvider<VerifyBloc>.value(
+              value: di.get<VerifyBloc>(),
             ),
           ],
           child: BlocProvider<ThemeCubit>(

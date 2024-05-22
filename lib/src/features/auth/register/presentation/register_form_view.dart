@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:find_football/src/core/di/di.dart';
 import 'package:find_football/src/core/router/router.gr.dart';
 import 'package:find_football/src/features/auth/register/presentation/register_bloc/register_bloc.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(
+    return BlocBuilder<RegisterBloc, AuthState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.black,
@@ -89,8 +90,6 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                     child: Form(
                       key: _formKey,
                       child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        // mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const SizedBox(
@@ -150,6 +149,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                             child: TextFormField(
                               controller: _phoneNumberController,
                               keyboardType: TextInputType.phone,
+                              style: const TextStyle(color: AppColors.textColor),
                               onTap: () {},
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
@@ -168,7 +168,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                               ),
                               inputFormatters: [
                                 MaskedTextInputFormatter(
-                                  mask: ' ## ### ## ##',
+                                  mask: ' #########',
                                   separator: ' ',
                                   filter: RegExp('[0-9]'),
                                 ),
@@ -189,6 +189,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                               controller: _passwordController,
                               keyboardType: TextInputType.visiblePassword,
                               obscureText: _isPasswordObsecure,
+                              style: const TextStyle(color: AppColors.textColor),
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 suffixIcon: _passwordController.text.isNotEmpty
@@ -242,6 +243,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                               controller: _passwordConfirmController,
                               keyboardType: TextInputType.visiblePassword,
                               obscureText: _isPasswordObsecure,
+                              style: const TextStyle(color: AppColors.textColor),
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 suffixIcon:
@@ -290,9 +292,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                               text: "Register",
                               textColor: Colors.white,
                               onTap: () {
-                                context.replaceRoute(
-                                  RootView(),
-                                );
+                                di<RegisterBloc>().add(RegisterEvent(buildContext: context, fullName: _userNameController.text.trim() ?? "", login: _loginController.text.trim(), phoneNumber: "+998${_phoneNumberController.text.trim()}", password: _passwordController.text.trim(),),);
                               }),
                           const Spacer(),
                         ],
@@ -317,7 +317,9 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                       .copyWith(color: Colors.grey),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushRoute(LoginFormView());
+                  },
                   child: Text(
                     'Login',
                     style: Theme.of(context)

@@ -11,8 +11,10 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../../features/auth/login/presentation/login_bloc/login_bloc.dart'
+import '../../features/auth/confirmation/presentation/verify_bloc/verify_bloc.dart'
     as _i3;
+import '../../features/auth/login/presentation/login_bloc/login_bloc.dart'
+    as _i5;
 import '../../features/auth/register/presentation/register_bloc/register_bloc.dart'
     as _i4;
 
@@ -27,7 +29,8 @@ _i1.GetIt $initGetIt(
     environment,
     environmentFilter,
   );
-  gh.lazySingleton<_i3.LoginBloc>(() => _i3.LoginBloc());
+  gh.lazySingleton<_i3.VerifyBloc>(() => _i3.VerifyBloc());
   gh.lazySingleton<_i4.RegisterBloc>(() => _i4.RegisterBloc());
+  gh.lazySingleton<_i5.LoginBloc>(() => _i5.LoginBloc());
   return getIt;
 }

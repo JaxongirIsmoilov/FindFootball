@@ -15,4 +15,23 @@ class AppIcons{
   static const String filterIcon = 'assets/icons/filter_icon.png';
   static const String adImage1 = 'assets/images/ad_image1.png';
   static const String adImage2 = 'assets/images/ad_image2.png';
+  static const String footballIcon = 'assets/icons/futbol_icon.png';
+  static const String summerTime = 'assets/icons/summer_time.png';
+  static const String location = 'assets/icons/location.png';
+  static const String likeIconBorder = 'assets/icons/likelike_icon_border.png';
+  static const String likeIconFilled = 'assets/icons/likelike_icon_filled.png';
+  static const String shareIcon = 'assets/icons/share_icon.png';
+  static const String routeIcon = 'assets/icons/route_icon.png';
+  static const String carParkingIcon = 'assets/icons/car_parking.png';
+  static const String changingRoomIcon = 'assets/icons/changing_room.png';
+  static const String inventoryIcon = 'assets/icons/inventory_icon.png';
+  static const String lightsIcon = 'assets/icons/lghts_icon.png';
+  static const String showerIcon = 'assets/icons/shower_icon.png';
+  static const String tribuniIcon = 'assets/icons/tribuni_icon.png';
+  static const String checkIcon = 'assets/icons/check_icon.png';
+  static const String closeIcon = 'assets/icons/close_icon.png';
+  static const String stadiumPic1 = 'assets/images/stadium_pic1.png';
+  static const String stadiumPic2 = 'assets/images/stadium_pic2.png';
+  static const String stadiumPic3 = 'assets/images/stadium_pic3.png';
+  static const String stadiumPic4 = 'assets/images/stadium_pic4.png';
 }

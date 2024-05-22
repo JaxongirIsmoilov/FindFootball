@@ -15,6 +15,7 @@ class AppRouter extends $AppRouter {
           page: LoginFormView.page,
         ),
         AutoRoute(page: RegisterFormView.page),
+        AutoRoute(page: ConfirmCodeView.page),
         CustomRoute(
           page: RootView.page,
           children: [
@@ -24,5 +25,6 @@ class AppRouter extends $AppRouter {
           ],
           transitionsBuilder: TransitionsBuilders.fadeIn,
         ),
+    AutoRoute(page: ItemDetailsView.page),
       ];
 }

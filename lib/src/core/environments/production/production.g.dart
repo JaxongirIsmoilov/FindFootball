@@ -6,4 +6,7 @@ part of 'production.dart';
 // JsonLiteralGenerator
 // **************************************************************************
 
-const _$productionEnvJsonLiteral = {'apiUrl': '', 'env': 'PROD'};
+const _$productionEnvJsonLiteral = {
+  'apiUrl': 'https://9738-213-230-125-170.ngrok-free.app/api',
+  'env': 'PROD'
+};

@@ -8,7 +8,7 @@ class AdCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      margin: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -20,7 +20,6 @@ class AdCard extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-
         ],
       ),
     );
