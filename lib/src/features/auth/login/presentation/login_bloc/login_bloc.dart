@@ -8,6 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../main/home/presentation/bloc/home_bloc.dart';
+
 part 'login_event.dart';
 part 'login_state.dart';
 
@@ -34,7 +36,9 @@ class LoginBloc extends Bloc<AuthEvent, AuthState> {
               ExceptionState(message: l.message);
             },
             (r) {
-              loginEvent.buildContext.replaceRoute(RootView());
+              loginEvent.buildContext.replaceRoute(HomeView());
+              // di<HomeBloc>().add(FetchAllStadiumsEvent(context: loginEvent.buildContext),);
+
             },
           ),
         );

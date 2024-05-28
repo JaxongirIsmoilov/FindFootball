@@ -73,6 +73,12 @@ dependencies:
   flutter_rating_stars: ^1.1.0
   carousel_slider: ^4.2.1
   yandex_mapkit: ^4.0.2
+  geocoding: ^3.0.0
+  uuid: ^4.4.0
+  location: ^6.0.2
+  screenshot: ^2.5.0
+  image_picker: ^1.1.1
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:

@@ -6,13 +6,16 @@ import 'package:find_football/src/core/consts/description.dart';
 import 'package:find_football/src/core/consts/icons/app_icons.dart';
 import 'package:find_football/src/features/main/details/data/models/features_model.dart';
 import 'package:find_football/src/features/main/details/presentation/widgets/details_image_slider.dart';
+import 'package:find_football/src/features/main/home/data/models/response/all_stadiums_success.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 @RoutePage()
 class ItemDetailsView extends StatefulWidget {
-  const ItemDetailsView({super.key});
+  final AllStadiumsSuccess allStadiumsSuccess;
+  final String address;
+  const ItemDetailsView({super.key, required this.allStadiumsSuccess, required this.address});
 
   @override
   State<ItemDetailsView> createState() => _ItemDetailsViewState();
@@ -53,10 +56,28 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
     );
   }
 
+  bool isOpen(String startTime, String endTime){
+    final start = TimeOfDay(hour: int.parse(startTime.split(':')[0]), minute: int.parse(startTime.split(':')[1],),);
+    final end = TimeOfDay(hour: int.parse(endTime.split(':')[0]), minute: int.parse(endTime.split(':')[1],),);
+    final now = TimeOfDay.now();
+    int toMinutes(TimeOfDay time){
+      return time.hour *60 + time.minute;
+    }
+    final startMinutes = toMinutes(start);
+    final endMinutes = toMinutes(end);
+    final nowMinutes = toMinutes(now);
+
+    if(startMinutes <= endMinutes){
+      return nowMinutes >= startMinutes && nowMinutes <= endMinutes;
+    }else{
+      return nowMinutes >= startMinutes || nowMinutes <= endMinutes;
+    }
+  }
+
   @override
   void initState() {
     _scrollController = ScrollController();
-    _moveToCurrentLocation(41.32752046435206, 69.2752488846577);
+    _moveToCurrentLocation(widget.allStadiumsSuccess.location.latitude, widget.allStadiumsSuccess.location.longitude);
     super.initState();
   }
 
@@ -149,7 +170,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
               background: Container(
                 height: 300,
                 width: MediaQuery.of(context).size.width,
-                child: DetailsImageSlider(imageList: stadiumImageList),
+                child: DetailsImageSlider(imageList: widget.allStadiumsSuccess.images.isNotEmpty ? widget.allStadiumsSuccess.images.map((image) => image.path).toList() : [AppIcons.adImage1,AppIcons.stadiumPic2,AppIcons.stadiumPic3,AppIcons.stadiumPic4], isImageEmpty: widget.allStadiumsSuccess.images.isEmpty,),
               ),
             ),
           ),
@@ -163,8 +184,8 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Зал единоборств "Золотой Дракон',
-                        style: TextStyle(
+                        widget.allStadiumsSuccess.name,
+                        style: const TextStyle(
                           color: AppColors.textColor,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -200,9 +221,9 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                         starColor: Colors.yellow,
                       ),
                       const SizedBox(height: 8,),
-                      const Text(
-                        '200 000 sum',
-                        style: TextStyle(
+                       Text(
+                        "${widget.allStadiumsSuccess.price.amount} ${widget.allStadiumsSuccess.price.currency}",
+                        style: const TextStyle(
                           color: AppColors.textColor,
                           fontSize: 16,
                           fontWeight: FontWeight.w800,
@@ -262,12 +283,12 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                               color: Colors.grey,
                             ),
                           ),
-                          const Expanded(
+                           Expanded(
                             child: Center(
                               child: Text(
-                                'Открытый',
-                                style: TextStyle(
-                                  color: AppColors.textColor,
+                                isOpen(widget.allStadiumsSuccess.workStartHour ?? "07:00:00", widget.allStadiumsSuccess.workEndingHour ?? "23:00:00") ? 'Открытый' : "Закрытый",
+                                style:  TextStyle(
+                                  color: isOpen(widget.allStadiumsSuccess.workStartHour ?? "07:00:00", widget.allStadiumsSuccess.workEndingHour ?? "23:00:00") ? AppColors.openTextColor : AppColors.closedTextColor,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w300,
                                 ),
@@ -306,10 +327,10 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                             width: 16,
                           ),
                           const SizedBox(width: 5,),
-                          const Expanded(
+                           Expanded(
                             child: Text(
-                              'Псковская область, город Дорохово, наб. Будапештсткая, 62',
-                              style: TextStyle(
+                              widget.address,
+                              style: const TextStyle(
                                 color: AppColors.textColor,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w300,
@@ -338,10 +359,10 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                             width: 16,
                           ),
                           const SizedBox(width: 5,),
-                          const Expanded(
+                           Expanded(
                             child: Text(
-                              'Псковская область, город Дорохово ',
-                              style: TextStyle(
+                              widget.address ,
+                              style: const TextStyle(
                                 color: AppColors.textColor,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w300,
@@ -386,9 +407,9 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                                       ),
                                     ),
                                   ),
-                                  point: const Point(
-                                    latitude: 41.32752046435206,
-                                    longitude: 69.2752488846577,
+                                  point:  Point(
+                                    latitude: widget.allStadiumsSuccess.location.latitude,
+                                    longitude: widget.allStadiumsSuccess.location.longitude,
                                   ),
                                 ),
                               ],

@@ -42,6 +42,17 @@ class HiveService{
     return result;
   }
 
+  //ShowOnboarding
+
+  static Future<void> saveUserSeenOnBoarding(bool isFirstTimeUser) async {
+    await box.put(BoxConsts.verifiedUserKey, isFirstTimeUser);
+  }
+
+  static Future<bool> isShowBoarding() async {
+    var result =  await box.get(BoxConsts.verifiedUserKey) ?? false;
+    return result;
+  }
+
   //Access token
   static Future<void> saveAccessToken(String accessToken) async {
     await box.put(BoxConsts.accessToken, accessToken) ;

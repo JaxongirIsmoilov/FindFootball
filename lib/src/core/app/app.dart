@@ -1,7 +1,12 @@
 import 'package:find_football/src/core/router/router.dart';
+import 'package:find_football/src/core/services/hive_service.dart';
 import 'package:find_football/src/features/auth/confirmation/presentation/verify_bloc/verify_bloc.dart';
 import 'package:find_football/src/features/auth/login/presentation/login_bloc/login_bloc.dart';
 import 'package:find_football/src/features/auth/register/presentation/register_bloc/register_bloc.dart';
+import 'package:find_football/src/features/main/add_ad/presentation/bloc/add_ad_bloc.dart';
+import 'package:find_football/src/features/main/home/presentation/bloc/home_bloc.dart';
+import 'package:find_football/src/features/main/profile/presentation/bloc/profile_bloc.dart';
+import 'package:find_football/src/features/main/root/presentation/bloc/root_bloc.dart';
 import 'package:find_football/src/features/theme/presentation/cubit/theme_cubit.dart';
 import 'package:find_football/src/features/theme/presentation/cubit/theme_state.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +43,7 @@ class App extends StatelessWidget with WidgetsBindingObserver {
       AppUtils.isTable = data.size.shortestSide < 600 ? false : true;
       return data.size.shortestSide < 600 ? 1 : 2;
     }
+    HiveService.saveUserSeenOnBoarding(true);
 
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
@@ -56,6 +62,18 @@ class App extends StatelessWidget with WidgetsBindingObserver {
             ),
             BlocProvider<VerifyBloc>.value(
               value: di.get<VerifyBloc>(),
+            ),
+            BlocProvider<RootBloc>.value(
+              value: di.get<RootBloc>(),
+            ),
+            BlocProvider<HomeBloc>.value(
+              value: di.get<HomeBloc>(),
+            ),
+            BlocProvider<AddAdBloc>.value(
+              value: di.get<AddAdBloc>(),
+            ),
+            BlocProvider<ProfileBloc>.value(
+              value: di.get<ProfileBloc>(),
             ),
           ],
           child: BlocProvider<ThemeCubit>(

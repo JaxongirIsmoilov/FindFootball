@@ -22,6 +22,8 @@ class AppRouter extends $AppRouter {
             AutoRoute(page: HomeView.page),
             AutoRoute(page: FavoriteView.page),
             AutoRoute(page: HistoryView.page),
+            AutoRoute(page: AddAdView.page),
+            AutoRoute(page: ProfileView.page),
           ],
           transitionsBuilder: TransitionsBuilders.fadeIn,
         ),

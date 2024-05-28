@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AppColors{
   AppColors._();
@@ -12,4 +13,8 @@ class AppColors{
   static const Color transparent =  Color(0x00000000);
   static const Color navBarColor =  Color(0xFF152E51);
   static const Color textColorItem = Color(0xFF01001F);
+  static const Color openTextColor = Colors.green;
+  static const Color closedTextColor = Colors.red;
+  static const Color iconColor = Colors.grey;
+  static  Color textEditingBackgroundColor = Colors.grey.withOpacity(0.7);
 }

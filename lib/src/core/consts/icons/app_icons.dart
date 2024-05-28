@@ -34,4 +34,9 @@ class AppIcons{
   static const String stadiumPic2 = 'assets/images/stadium_pic2.png';
   static const String stadiumPic3 = 'assets/images/stadium_pic3.png';
   static const String stadiumPic4 = 'assets/images/stadium_pic4.png';
+  static const String addIcon = 'assets/icons/add_icon.png';
+  static const String imageIcon = 'assets/icons/image_icon.png';
+  static const String removeIcon = 'assets/icons/remove_icon.png';
+  static const String adIcon = 'assets/icons/ad_icon.png';
+
 }

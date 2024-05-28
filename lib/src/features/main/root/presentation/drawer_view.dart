@@ -1,12 +1,11 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:find_football/src/core/consts/icons/app_icons.dart';
-import 'package:find_football/src/core/router/router.gr.dart';
 import 'package:flutter/material.dart';
 
 class DrawerView extends StatelessWidget {
-  const DrawerView({super.key, required this.userName});
+  const DrawerView({super.key, required this.userName, required this.logOut});
 
   final String userName;
+  final Function() logOut;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +42,7 @@ class DrawerView extends StatelessWidget {
           ),
         ),
         InkWell(
-          onTap: (){
-            context.replaceRoute(LoginView());
-          },
+          onTap: logOut,
           child: ListTile(
             leading: const Icon(
               Icons.logout,

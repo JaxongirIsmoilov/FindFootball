@@ -1,13 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:find_football/src/core/consts/api/api_constants.dart';
 import 'package:find_football/src/core/consts/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class DetailsImageSlider extends StatefulWidget {
 
   final List<String> imageList;
+  final bool isImageEmpty;
 
 
-  const DetailsImageSlider({required this.imageList, super.key});
+  const DetailsImageSlider({required this.imageList, required this.isImageEmpty, super.key});
 
   @override
   State<DetailsImageSlider> createState() => _DetailsImageSliderState();
@@ -48,7 +50,7 @@ class _DetailsImageSliderState extends State<DetailsImageSlider> {
               height: 300,
               width: MediaQuery.of(context).size.width,
               color: Colors.grey,
-              child: Image.asset(item, fit: BoxFit.cover,),
+              child: widget.isImageEmpty ? Image.asset(item, fit: BoxFit.cover,) :  Image.network("${ApiConstants.BASE_URL_IMG}/${item.replaceAll("\\", "/")}", fit: BoxFit.cover,),
             ))
                 .toList(),
           ),

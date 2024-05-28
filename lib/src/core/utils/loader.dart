@@ -8,7 +8,7 @@ Widget buttonLoader = const CupertinoActivityIndicator(
 );
 Widget buttonLoaderColor = const CupertinoActivityIndicator(
   radius: 30,
-  color: AppColors.white,
+  color: AppColors.cardColor,
 );
 Widget cupertinoProgress = const CupertinoActivityIndicator(
   radius: 30,

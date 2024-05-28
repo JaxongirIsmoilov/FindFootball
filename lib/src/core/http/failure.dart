@@ -4,3 +4,7 @@ class Failure {
 
   Failure(this.code, this.message);
 }
+
+class Success{
+
+}

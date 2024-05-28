@@ -4,6 +4,7 @@ import 'package:find_football/src/core/di/di.dart';
 import 'package:find_football/src/core/router/router.gr.dart';
 import 'package:find_football/src/core/utils/pop_up_modal.dart';
 import 'package:find_football/src/features/auth/register/domain/usecase/register_usecase.dart';
+import 'package:find_football/src/features/main/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';

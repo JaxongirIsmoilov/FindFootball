@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:find_football/src/core/consts/icons/app_icons.dart';
 import 'package:find_football/src/core/mixins/after_layout_mixin.dart';
 import 'package:find_football/src/core/router/router.gr.dart';
+import 'package:find_football/src/core/services/hive_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,8 +28,11 @@ class _SplashViewState extends State<SplashView> with AfterLayoutMixin {
   }
 
   Future<void> authCheck() async {
-    //
-    await context.replaceRoute(const OnBoardingView());
+    if(await HiveService.isUserVerified()){
+      context.replaceRoute(HomeView());
+    }else{
+      await context.replaceRoute(const OnBoardingView());
+    }
   }
 
   @override
