@@ -16,9 +16,13 @@ class BookStadium extends StatefulWidget {
     required this.stadiumId,
     required this.startWorkingTime,
     required this.endWorkingTime,
+    required this.price,
+    required this.currency,
   });
 
   final String stadiumId;
+  final int price;
+  final String currency;
   final String startWorkingTime;
   final String endWorkingTime;
 
@@ -35,6 +39,7 @@ class _BookStadiumState extends State<BookStadium> {
   DateTime? gameDate;
   TimeOfDay? gameStartTime;
   TimeOfDay? gameEndTime;
+  bool isTimePicked = false;
 
   void _openDateRangePicker() async {
     DateTime now = DateTime.now();
@@ -100,6 +105,7 @@ class _BookStadiumState extends State<BookStadium> {
       if (value != null && value != gameEndTime) {
         setState(() {
           gameEndTime = value;
+          isTimePicked = true;
         });
       }
     });
@@ -129,10 +135,26 @@ class _BookStadiumState extends State<BookStadium> {
     }
   }
 
+  int calculateGameDurationInHour(
+      TimeOfDay gameStartTime, TimeOfDay gameEndTime) {
+    int startMinutes = gameStartTime.hour * 60 + gameStartTime.minute;
+    int endMinutes = gameEndTime.hour * 60 + gameEndTime.minute;
+    int durationMinutes;
+    if (endMinutes >= startMinutes) {
+      durationMinutes = endMinutes - startMinutes;
+    } else {
+      // Handle case where end time is past midnight
+      durationMinutes = (24 * 60 - startMinutes) + endMinutes;
+    }
+
+    return durationMinutes ~/ 60;
+  }
+
   @override
   void dispose() {
     bookedTimes = [];
     isPicked = false;
+    isTimePicked = false;
     super.dispose();
   }
 
@@ -150,274 +172,307 @@ class _BookStadiumState extends State<BookStadium> {
             onPressed: () {},
           );
         }
-        return SizedBox(
-          width: double.infinity,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              const Text(
-                'Choose a date which dates you want to book',
-                style: TextStyle(color: AppColors.textColor),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 55,
-                width: MediaQuery.of(context).size.width / 1.12,
-                // color: Colors.grey,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(15),
+        return SingleChildScrollView(
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 30,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      selectedDateRange == null
-                          ? "Start Date"
-                          : selectedDateRange!.start
-                              .toLocal()
-                              .toString()
-                              .split(' ')[0],
-                      style: TextStyle(color: Colors.grey.shade900),
-                    ),
-                    Text(
-                      selectedDateRange == null
-                          ? "End Date"
-                          : selectedDateRange!.end
-                              .toLocal()
-                              .toString()
-                              .split(' ')[0],
-                      style: TextStyle(color: Colors.grey.shade900),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        _openDateRangePicker();
-                        // di<BookingBloc>().add(GetAllBookedTimes(context: context, stadiumId: widget.stadiumId, startTime: startTime!, endTime: endTime!, ),);
-                      },
-                      icon: const Icon(CupertinoIcons.calendar),
-                    ),
-                  ],
+                const Text(
+                  'Choose a date which dates you want to book',
+                  style: TextStyle(color: AppColors.textColor),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              if (isPicked)
-                bookedTimes.isNotEmpty
-                    ? Column(
-                        children: [
-                          const Text(
-                            "Times are showed below is booked, Please choose except this times",
-                            style: TextStyle(color: AppColors.textColor),
-                            textAlign: TextAlign.center,
-                          ),
-                          Wrap(
-                            spacing: 8.0, // gap between adjacent chips
-                            runSpacing: 4.0, // gap between lines
-                            children: bookedTimes.map((time) {
-                              return Chip(
-                                avatar:
-                                    const Icon(Icons.access_time, size: 20.0),
-                                label: Text(
-                                    "${formatTime(time.startTime)}-${formatTime(time.endTime)}"),
-                                backgroundColor:
-                                    getTimeColor(time.startTime, time.endTime),
-                              );
-                            }).toList(),
-                          ),
-                        ],
-                      )
-                    : const Text(
-                        "There is no reservation range that you picked.You can reserve in working times",
-                        style: TextStyle(color: AppColors.textColor),
-                        textAlign: TextAlign.center,
-                      ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: 55,
+                  width: MediaQuery.of(context).size.width / 1.12,
+                  // color: Colors.grey,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Working Start Time:   ',
-                        style: TextStyle(color: AppColors.textColor),
+                      const SizedBox(
+                        width: 10,
                       ),
-                      Container(
-                        height: 45,
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Center(
-                          child: Text(
-                            widget.startWorkingTime,
-                            style: TextStyle(color: Colors.grey.shade900),
-                          ),
-                        ),
+                      Text(
+                        selectedDateRange == null
+                            ? "Start Date"
+                            : selectedDateRange!.start
+                                .toLocal()
+                                .toString()
+                                .split(' ')[0],
+                        style: TextStyle(color: Colors.grey.shade900),
+                      ),
+                      Text(
+                        selectedDateRange == null
+                            ? "End Date"
+                            : selectedDateRange!.end
+                                .toLocal()
+                                .toString()
+                                .split(' ')[0],
+                        style: TextStyle(color: Colors.grey.shade900),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          _openDateRangePicker();
+                          // di<BookingBloc>().add(GetAllBookedTimes(context: context, stadiumId: widget.stadiumId, startTime: startTime!, endTime: endTime!, ),);
+                        },
+                        icon: const Icon(CupertinoIcons.calendar),
                       ),
                     ],
                   ),
-                  Column(
-                    children: [
-                      const Text(
-                        'Working End Time:   ',
-                        style: TextStyle(color: AppColors.textColor),
-                      ),
-                      Container(
-                        height: 45,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                if (isPicked)
+                  bookedTimes.isNotEmpty
+                      ? Column(
+                          children: [
+                            const Text(
+                              "Times are showed below is booked, Please choose except this times",
+                              style: TextStyle(color: AppColors.textColor),
+                              textAlign: TextAlign.center,
+                            ),
+                            Wrap(
+                              spacing: 8.0, // gap between adjacent chips
+                              runSpacing: 4.0, // gap between lines
+                              children: bookedTimes.map((time) {
+                                return Chip(
+                                  avatar:
+                                      const Icon(Icons.access_time, size: 20.0),
+                                  label: Text(
+                                      "${formatTime(time.startTime)}-${formatTime(time.endTime)}"),
+                                  backgroundColor:
+                                      getTimeColor(time.startTime, time.endTime),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        )
+                      : const Text(
+                          "There is no reservation range that you picked.You can reserve in working times",
+                          style: TextStyle(color: AppColors.textColor),
+                          textAlign: TextAlign.center,
+                        ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        const Text(
+                          'Working Start Time:   ',
+                          style: TextStyle(color: AppColors.textColor),
+                        ),
+                        Container(
+                          height: 45,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Center(
+                            child: Text(
+                              widget.startWorkingTime,
+                              style: TextStyle(color: Colors.grey.shade900),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          'Working End Time:   ',
+                          style: TextStyle(color: AppColors.textColor),
+                        ),
+                        Container(
+                          height: 45,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Center(
+                            child: Text(
+                              widget.endWorkingTime,
+                              style: TextStyle(color: Colors.grey.shade900),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                isPicked
+                    ? Container(
+                        height: 55,
+                        width: MediaQuery.of(context).size.width / 1.12,
+                        // color: Colors.grey,
                         decoration: BoxDecoration(
                           color: Colors.grey,
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        child: Center(
-                          child: Text(
-                            widget.endWorkingTime,
-                            style: TextStyle(color: Colors.grey.shade900),
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Game Date:",
+                              style: TextStyle(color: Colors.grey.shade900),
+                            ),
+                            Text(
+                              gameDate == null
+                                  ? "Date"
+                                  : gameDate!.toLocal().toString().split(' ')[0],
+                              style: TextStyle(color: Colors.grey.shade900),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                _openDatePicker();
+                                // di<BookingBloc>().add(GetAllBookedTimes(context: context, stadiumId: widget.stadiumId, startTime: startTime!, endTime: endTime!, ),);
+                              },
+                              icon:
+                                  const Icon(CupertinoIcons.calendar_badge_plus),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              isPicked
-                  ? Container(
-                      height: 55,
-                      width: MediaQuery.of(context).size.width / 1.12,
-                      // color: Colors.grey,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      )
+                    : Container(),
+                const SizedBox(
+                  height: 15,
+                ),
+                isPicked
+                    ? Container(
+                        height: 55,
+                        width: MediaQuery.of(context).size.width / 1.12,
+                        // color: Colors.grey,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Game Start Time:",
+                              style: TextStyle(color: Colors.grey.shade900),
+                            ),
+                            Text(
+                              gameStartTime == null
+                                  ? "Start Time"
+                                  : formatTimeOfDay(gameStartTime!),
+                              style: TextStyle(color: Colors.grey.shade900),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                _openGameStartTimePicker();
+                                // di<BookingBloc>().add(GetAllBookedTimes(context: context, stadiumId: widget.stadiumId, startTime: startTime!, endTime: endTime!, ),);
+                              },
+                              icon: const Icon(CupertinoIcons.time),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(),
+                const SizedBox(
+                  height: 15,
+                ),
+                isPicked
+                    ? Container(
+                        height: 55,
+                        width: MediaQuery.of(context).size.width / 1.12,
+                        // color: Colors.grey,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Game Ends Time:",
+                              style: TextStyle(color: Colors.grey.shade900),
+                            ),
+                            Text(
+                              gameEndTime == null
+                                  ? "End Time"
+                                  : formatTimeOfDay(gameEndTime!),
+                              style: TextStyle(color: Colors.grey.shade900),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                _openGameEndTimePicker();
+                                // di<BookingBloc>().add(GetAllBookedTimes(context: context, stadiumId: widget.stadiumId, startTime: startTime!, endTime: endTime!, ),);
+                              },
+                              icon: const Icon(CupertinoIcons.time),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(),
+                const SizedBox(
+                  height: 15,
+                ),
+                isTimePicked
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                          Text(
+                            "${calculateGameDurationInHour(gameStartTime!, gameEndTime!) * widget.price}",
+                            style: const TextStyle(color: AppColors.textColor),
+                          ),
                           const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            "Game Date:",
-                            style: TextStyle(color: Colors.grey.shade900),
+                            widget.currency,
+                            style: const TextStyle(color: AppColors.textColor),
                           ),
-                          Text(
-                            gameDate == null
-                                ? "Date"
-                                : gameDate!.toLocal().toString().split(' ')[0],
-                            style: TextStyle(color: Colors.grey.shade900),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              _openDatePicker();
-                              // di<BookingBloc>().add(GetAllBookedTimes(context: context, stadiumId: widget.stadiumId, startTime: startTime!, endTime: endTime!, ),);
-                            },
-                            icon:
-                                const Icon(CupertinoIcons.calendar_badge_plus),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(),
-              const SizedBox(
-                height: 15,
-              ),
-              isPicked
-                  ? Container(
-                      height: 55,
-                      width: MediaQuery.of(context).size.width / 1.12,
-                      // color: Colors.grey,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
                           const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Game Start Time:",
-                            style: TextStyle(color: Colors.grey.shade900),
-                          ),
-                          Text(
-                            gameStartTime == null
-                                ? "Start Time"
-                                : formatTimeOfDay(gameStartTime!),
-                            style: TextStyle(color: Colors.grey.shade900),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              _openGameStartTimePicker();
-                              // di<BookingBloc>().add(GetAllBookedTimes(context: context, stadiumId: widget.stadiumId, startTime: startTime!, endTime: endTime!, ),);
-                            },
-                            icon: const Icon(CupertinoIcons.time),
+                            width: 30,
                           ),
                         ],
-                      ),
-                    )
-                  : Container(),
-              const SizedBox(
-                height: 15,
-              ),
-              isPicked
-                  ? Container(
-                      height: 55,
-                      width: MediaQuery.of(context).size.width / 1.12,
-                      // color: Colors.grey,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Game Ends Time:",
-                            style: TextStyle(color: Colors.grey.shade900),
-                          ),
-                          Text(
-                            gameEndTime == null
-                                ? "End Time"
-                                : formatTimeOfDay(gameEndTime!),
-                            style: TextStyle(color: Colors.grey.shade900),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              _openGameEndTimePicker();
-                              // di<BookingBloc>().add(GetAllBookedTimes(context: context, stadiumId: widget.stadiumId, startTime: startTime!, endTime: endTime!, ),);
-                            },
-                            icon: const Icon(CupertinoIcons.time),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(),
-              CustomButtonPref(
-                color: AppColors.buttonColor,
-                text: "Book Now",
-                textColor: AppColors.white,
-                onTap: () {
-                  di<BookingBloc>().add(BookStadiumEvent(context: context, stadiumId: widget.stadiumId, date: gameDate!.toLocal().toString().split(' ')[0], startTime: "${formatTimeOfDay(gameStartTime!)}:00", endTime: "${formatTimeOfDay(gameEndTime!)}:00"),);
-                },
-                width: MediaQuery.of(context).size.width / 1.12,
-                height: 55,
-              )
-            ],
+                      )
+                    : Container(),
+                CustomButtonPref(
+                  color: AppColors.buttonColor,
+                  text: "Book Now",
+                  textColor: AppColors.white,
+                  onTap: () {
+                    di<BookingBloc>().add(
+                      BookStadiumEvent(
+                          context: context,
+                          stadiumId: widget.stadiumId,
+                          date: gameDate!.toLocal().toString().split(' ')[0],
+                          startTime: "${formatTimeOfDay(gameStartTime!)}:00",
+                          endTime: "${formatTimeOfDay(gameEndTime!)}:00"),
+                    );
+                  },
+                  width: MediaQuery.of(context).size.width / 1.12,
+                  height: 55,
+                )
+              ],
+            ),
           ),
         );
       },

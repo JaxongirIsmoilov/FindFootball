@@ -98,13 +98,20 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
     super.initState();
   }
 
-  void _openBookOverlay(String stadiumId, String startWorkingTime, String endWorkingTime) {
+  void _openBookOverlay(String stadiumId, String startWorkingTime,
+      String endWorkingTime, int price, String currency) {
     showModalBottomSheet(
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
       backgroundColor: AppColors.appBakColor,
-      builder: (ctx) => BookStadium(stadiumId: stadiumId, startWorkingTime: startWorkingTime, endWorkingTime: endWorkingTime, ),
+      builder: (ctx) => BookStadium(
+        stadiumId: stadiumId,
+        startWorkingTime: startWorkingTime,
+        endWorkingTime: endWorkingTime,
+        price: price,
+        currency: currency,
+      ),
     );
   }
 
@@ -573,7 +580,13 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     text: "Book",
                     textColor: AppColors.white,
                     onTap: () {
-                        _openBookOverlay(widget.allStadiumsSuccess.id, widget.allStadiumsSuccess.workStartHour ?? "07:00:00", widget.allStadiumsSuccess.workEndingHour ?? "23:59:59");
+                      _openBookOverlay(
+                        widget.allStadiumsSuccess.id,
+                        widget.allStadiumsSuccess.workStartHour ?? "07:00:00",
+                        widget.allStadiumsSuccess.workEndingHour ?? "23:59:59",
+                        widget.allStadiumsSuccess.price.amount,
+                        widget.allStadiumsSuccess.price.currency,
+                      );
                     },
                     width: MediaQuery.of(context).size.width / 2.4,
                     height: 45),
@@ -583,7 +596,8 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     text: "Call",
                     textColor: AppColors.white,
                     onTap: () async {
-                      await _makePhoneCall(widget.allStadiumsSuccess.ownerAccount.user!.phoneNumber);
+                      await _makePhoneCall(widget
+                          .allStadiumsSuccess.ownerAccount.user!.phoneNumber);
                     },
                     width: MediaQuery.of(context).size.width / 2.4,
                     height: 45),
