@@ -38,5 +38,6 @@ class AppIcons{
   static const String imageIcon = 'assets/icons/image_icon.png';
   static const String removeIcon = 'assets/icons/remove_icon.png';
   static const String adIcon = 'assets/icons/ad_icon.png';
+  static const String avatarImage = 'assets/icons/avatart.svg';
 
 }

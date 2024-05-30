@@ -9,6 +9,8 @@ import 'package:find_football/src/features/auth/login/domain/usecase/login_useca
 import 'package:find_football/src/features/auth/register/data/repository/register_repository_impl.dart';
 import 'package:find_football/src/features/auth/register/domain/repository/register_repository.dart';
 import 'package:find_football/src/features/auth/register/domain/usecase/register_usecase.dart';
+import 'package:find_football/src/features/main/booking/domain/repository/booking_repository.dart';
+import 'package:find_football/src/features/main/booking/domain/usecase/book_stadium_usecase.dart';
 import 'package:find_football/src/features/main/home/data/repository/fetch_all_stadiums_repository_impl.dart';
 import 'package:find_football/src/features/main/home/domain/repository/fetch_all_stadiums_repository.dart';
 import 'package:find_football/src/features/main/home/domain/usecase/fetch_all_stadiums_usecase.dart';
@@ -22,6 +24,8 @@ import 'package:find_football/src/features/main/root/domain/usecase/root_usecase
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../features/main/booking/data/repository/booking_repository_impl.dart';
+import '../../features/main/booking/domain/usecase/booked_times_use_case.dart';
 import '../http/api_service.dart';
 import 'di.config.dart';
 
@@ -55,6 +59,9 @@ Future<void> configureDependencies(Flavor flavorMode) async {
 
   di.registerLazySingleton(() => ProfileRepositoryImpl(di()));
   di.registerFactory<ProfileRepository>(() => ProfileRepositoryImpl(di()));
+
+  di.registerLazySingleton(() => BookingRepositoryImpl(di()));
+  di.registerFactory<BookingRepository>(() => BookingRepositoryImpl(di()));
   //UseCase
   di.registerFactory<RegisterUseCase>(() => RegisterUseCase(di()));
   di.registerFactory<VerifyUseCase>(() => VerifyUseCase(di()));
@@ -63,5 +70,7 @@ Future<void> configureDependencies(Flavor flavorMode) async {
   di.registerFactory<FetchAllStadiumsUseCase>(() => FetchAllStadiumsUseCase(di()));
   di.registerFactory<ProfileUseCase>(() => ProfileUseCase(di()));
   di.registerFactory<RequestToHostUseCase>(() => RequestToHostUseCase(di()));
+  di.registerFactory<BookedTimesUseCase>(() => BookedTimesUseCase(di()));
+  di.registerFactory<BookStadiumUseCase>(() => BookStadiumUseCase(di()));
 
 }

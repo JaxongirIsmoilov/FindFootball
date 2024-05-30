@@ -8,6 +8,7 @@ import 'package:find_football/src/features/main/profile/presentation/widgets/cus
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../data/models/custom_list_tile.dart';
 import 'bloc/profile_bloc.dart';
 
@@ -49,9 +50,9 @@ class _ProfileViewState extends State<ProfileView> {
                 const SizedBox(
                   height: 10,
                 ),
-                const CircleAvatar(
+                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage(AppIcons.user),
+                  child: SvgPicture.asset(AppIcons.avatarImage),
                 ),
                 const SizedBox(
                   height: 10,

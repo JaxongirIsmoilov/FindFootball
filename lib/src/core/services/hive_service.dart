@@ -66,6 +66,19 @@ class HiveService{
     return await box.get(BoxConsts.accessToken) ?? "";
   }
 
+  //AccountId token
+  static Future<void> saveAccountId(String accountId) async {
+    await box.put(BoxConsts.accountId, accountId) ;
+  }
+
+  static Future<void> removeAccountId() async{
+    await box.delete(BoxConsts.accountId);
+  }
+
+  static Future<String> getAccountId() async{
+    return await box.get(BoxConsts.accountId) ?? "";
+  }
+
   // Refresh Token
 
   static Future<void> saveRefreshToken(String refreshToken) async{

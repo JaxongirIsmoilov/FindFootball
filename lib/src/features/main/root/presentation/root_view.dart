@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
+import 'package:find_football/src/core/consts/colors/app_colors.dart';
 import 'package:find_football/src/core/consts/icons/app_icons.dart';
 import 'package:find_football/src/core/di/di.dart';
 import 'package:find_football/src/core/router/router.gr.dart';
+import 'package:find_football/src/core/services/hive_service.dart';
 import 'package:find_football/src/features/main/profile/data/models/response/profile_success.dart';
 import 'package:find_football/src/features/main/root/presentation/drawer_view.dart';
 import 'package:find_football/src/features/main/root/widgets/custom_searchbar.dart';
@@ -52,12 +54,13 @@ class _RootViewState extends State<RootView> {
         }
         if(state is FetchProfileState){
           profileSuccess = state.profileSuccess;
+          HiveService.saveAccountId(state.profileSuccess.accounts!.first.id);
           isUserHost = profileSuccess.accounts!.any((element) => element.roleId == 2);
         }
         if (state is ExceptionState) {
           return GlobalError(
             message: state.message,
-            onPressed: _updateData,
+            onPressed: () => _updateData(),
           );
         }
         return AutoTabsRouter(
@@ -72,7 +75,7 @@ class _RootViewState extends State<RootView> {
           transitionBuilder: (context, child, animation) {
             final _tabsRouter = AutoTabsRouter.of(context);
             return Scaffold(
-              backgroundColor: const Color(0xFF252525),
+              backgroundColor: AppColors.appBakColor,
               drawer: Drawer(
                 // surfaceTintColor: Colors,
 

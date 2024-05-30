@@ -30,7 +30,7 @@ mixin _$AllStadiumsSuccess {
   String? get workEndingHour => throw _privateConstructorUsedError;
   dynamic get district => throw _privateConstructorUsedError;
   String get details => throw _privateConstructorUsedError;
-  dynamic get ownerAccount => throw _privateConstructorUsedError;
+  Account get ownerAccount => throw _privateConstructorUsedError;
   List<Images> get images => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,11 +56,12 @@ abstract class $AllStadiumsSuccessCopyWith<$Res> {
       String? workEndingHour,
       dynamic district,
       String details,
-      dynamic ownerAccount,
+      Account ownerAccount,
       List<Images> images});
 
   $PriceCopyWith<$Res> get price;
   $LocationCopyWith<$Res> get location;
+  $AccountCopyWith<$Res> get ownerAccount;
 }
 
 /// @nodoc
@@ -86,7 +87,7 @@ class _$AllStadiumsSuccessCopyWithImpl<$Res, $Val extends AllStadiumsSuccess>
     Object? workEndingHour = freezed,
     Object? district = freezed,
     Object? details = null,
-    Object? ownerAccount = freezed,
+    Object? ownerAccount = null,
     Object? images = null,
   }) {
     return _then(_value.copyWith(
@@ -130,10 +131,10 @@ class _$AllStadiumsSuccessCopyWithImpl<$Res, $Val extends AllStadiumsSuccess>
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
               as String,
-      ownerAccount: freezed == ownerAccount
+      ownerAccount: null == ownerAccount
           ? _value.ownerAccount
           : ownerAccount // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as Account,
       images: null == images
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
@@ -154,6 +155,14 @@ class _$AllStadiumsSuccessCopyWithImpl<$Res, $Val extends AllStadiumsSuccess>
   $LocationCopyWith<$Res> get location {
     return $LocationCopyWith<$Res>(_value.location, (value) {
       return _then(_value.copyWith(location: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res> get ownerAccount {
+    return $AccountCopyWith<$Res>(_value.ownerAccount, (value) {
+      return _then(_value.copyWith(ownerAccount: value) as $Val);
     });
   }
 }
@@ -177,13 +186,15 @@ abstract class _$$AllStadiumsSuccessImplCopyWith<$Res>
       String? workEndingHour,
       dynamic district,
       String details,
-      dynamic ownerAccount,
+      Account ownerAccount,
       List<Images> images});
 
   @override
   $PriceCopyWith<$Res> get price;
   @override
   $LocationCopyWith<$Res> get location;
+  @override
+  $AccountCopyWith<$Res> get ownerAccount;
 }
 
 /// @nodoc
@@ -207,7 +218,7 @@ class __$$AllStadiumsSuccessImplCopyWithImpl<$Res>
     Object? workEndingHour = freezed,
     Object? district = freezed,
     Object? details = null,
-    Object? ownerAccount = freezed,
+    Object? ownerAccount = null,
     Object? images = null,
   }) {
     return _then(_$AllStadiumsSuccessImpl(
@@ -251,10 +262,10 @@ class __$$AllStadiumsSuccessImplCopyWithImpl<$Res>
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
               as String,
-      freezed == ownerAccount
+      null == ownerAccount
           ? _value.ownerAccount
           : ownerAccount // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as Account,
       null == images
           ? _value._images
           : images // ignore: cast_nullable_to_non_nullable
@@ -305,7 +316,7 @@ class _$AllStadiumsSuccessImpl implements _AllStadiumsSuccess {
   @override
   final String details;
   @override
-  final dynamic ownerAccount;
+  final Account ownerAccount;
   final List<Images> _images;
   @override
   List<Images> get images {
@@ -339,8 +350,8 @@ class _$AllStadiumsSuccessImpl implements _AllStadiumsSuccess {
                 other.workEndingHour == workEndingHour) &&
             const DeepCollectionEquality().equals(other.district, district) &&
             (identical(other.details, details) || other.details == details) &&
-            const DeepCollectionEquality()
-                .equals(other.ownerAccount, ownerAccount) &&
+            (identical(other.ownerAccount, ownerAccount) ||
+                other.ownerAccount == ownerAccount) &&
             const DeepCollectionEquality().equals(other._images, _images));
   }
 
@@ -358,7 +369,7 @@ class _$AllStadiumsSuccessImpl implements _AllStadiumsSuccess {
       workEndingHour,
       const DeepCollectionEquality().hash(district),
       details,
-      const DeepCollectionEquality().hash(ownerAccount),
+      ownerAccount,
       const DeepCollectionEquality().hash(_images));
 
   @JsonKey(ignore: true)
@@ -388,7 +399,7 @@ abstract class _AllStadiumsSuccess implements AllStadiumsSuccess {
       final String? workEndingHour,
       final dynamic district,
       final String details,
-      final dynamic ownerAccount,
+      final Account ownerAccount,
       final List<Images> images) = _$AllStadiumsSuccessImpl;
 
   factory _AllStadiumsSuccess.fromJson(Map<String, dynamic> json) =
@@ -415,7 +426,7 @@ abstract class _AllStadiumsSuccess implements AllStadiumsSuccess {
   @override
   String get details;
   @override
-  dynamic get ownerAccount;
+  Account get ownerAccount;
   @override
   List<Images> get images;
   @override
@@ -740,6 +751,506 @@ abstract class _Location implements Location {
   @override
   @JsonKey(ignore: true)
   _$$LocationImplCopyWith<_$LocationImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+User _$UserFromJson(Map<String, dynamic> json) {
+  return _User.fromJson(json);
+}
+
+/// @nodoc
+mixin _$User {
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get phoneNumber => throw _privateConstructorUsedError;
+  dynamic get gender => throw _privateConstructorUsedError;
+  dynamic get age => throw _privateConstructorUsedError;
+  dynamic get homeAddressId => throw _privateConstructorUsedError;
+  dynamic get address => throw _privateConstructorUsedError;
+  List<Account> get accounts => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserCopyWith<$Res> {
+  factory $UserCopyWith(User value, $Res Function(User) then) =
+      _$UserCopyWithImpl<$Res, User>;
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      String phoneNumber,
+      dynamic gender,
+      dynamic age,
+      dynamic homeAddressId,
+      dynamic address,
+      List<Account> accounts});
+}
+
+/// @nodoc
+class _$UserCopyWithImpl<$Res, $Val extends User>
+    implements $UserCopyWith<$Res> {
+  _$UserCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? phoneNumber = null,
+    Object? gender = freezed,
+    Object? age = freezed,
+    Object? homeAddressId = freezed,
+    Object? address = freezed,
+    Object? accounts = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      age: freezed == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      homeAddressId: freezed == homeAddressId
+          ? _value.homeAddressId
+          : homeAddressId // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      accounts: null == accounts
+          ? _value.accounts
+          : accounts // ignore: cast_nullable_to_non_nullable
+              as List<Account>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
+  factory _$$UserImplCopyWith(
+          _$UserImpl value, $Res Function(_$UserImpl) then) =
+      __$$UserImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      String phoneNumber,
+      dynamic gender,
+      dynamic age,
+      dynamic homeAddressId,
+      dynamic address,
+      List<Account> accounts});
+}
+
+/// @nodoc
+class __$$UserImplCopyWithImpl<$Res>
+    extends _$UserCopyWithImpl<$Res, _$UserImpl>
+    implements _$$UserImplCopyWith<$Res> {
+  __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? phoneNumber = null,
+    Object? gender = freezed,
+    Object? age = freezed,
+    Object? homeAddressId = freezed,
+    Object? address = freezed,
+    Object? accounts = null,
+  }) {
+    return _then(_$UserImpl(
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      freezed == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      freezed == homeAddressId
+          ? _value.homeAddressId
+          : homeAddressId // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      null == accounts
+          ? _value._accounts
+          : accounts // ignore: cast_nullable_to_non_nullable
+              as List<Account>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UserImpl implements _User {
+  const _$UserImpl(this.id, this.name, this.phoneNumber, this.gender, this.age,
+      this.homeAddressId, this.address, final List<Account> accounts)
+      : _accounts = accounts;
+
+  factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String name;
+  @override
+  final String phoneNumber;
+  @override
+  final dynamic gender;
+  @override
+  final dynamic age;
+  @override
+  final dynamic homeAddressId;
+  @override
+  final dynamic address;
+  final List<Account> _accounts;
+  @override
+  List<Account> get accounts {
+    if (_accounts is EqualUnmodifiableListView) return _accounts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_accounts);
+  }
+
+  @override
+  String toString() {
+    return 'User(id: $id, name: $name, phoneNumber: $phoneNumber, gender: $gender, age: $age, homeAddressId: $homeAddressId, address: $address, accounts: $accounts)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            const DeepCollectionEquality().equals(other.gender, gender) &&
+            const DeepCollectionEquality().equals(other.age, age) &&
+            const DeepCollectionEquality()
+                .equals(other.homeAddressId, homeAddressId) &&
+            const DeepCollectionEquality().equals(other.address, address) &&
+            const DeepCollectionEquality().equals(other._accounts, _accounts));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      phoneNumber,
+      const DeepCollectionEquality().hash(gender),
+      const DeepCollectionEquality().hash(age),
+      const DeepCollectionEquality().hash(homeAddressId),
+      const DeepCollectionEquality().hash(address),
+      const DeepCollectionEquality().hash(_accounts));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+      __$$UserImplCopyWithImpl<_$UserImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UserImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _User implements User {
+  const factory _User(
+      final String id,
+      final String name,
+      final String phoneNumber,
+      final dynamic gender,
+      final dynamic age,
+      final dynamic homeAddressId,
+      final dynamic address,
+      final List<Account> accounts) = _$UserImpl;
+
+  factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get name;
+  @override
+  String get phoneNumber;
+  @override
+  dynamic get gender;
+  @override
+  dynamic get age;
+  @override
+  dynamic get homeAddressId;
+  @override
+  dynamic get address;
+  @override
+  List<Account> get accounts;
+  @override
+  @JsonKey(ignore: true)
+  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Account _$AccountFromJson(Map<String, dynamic> json) {
+  return _Account.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Account {
+  String get id => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  int get roleId => throw _privateConstructorUsedError;
+  User? get user => throw _privateConstructorUsedError;
+  dynamic get role => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AccountCopyWith<Account> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AccountCopyWith<$Res> {
+  factory $AccountCopyWith(Account value, $Res Function(Account) then) =
+      _$AccountCopyWithImpl<$Res, Account>;
+  @useResult
+  $Res call({String id, String userId, int roleId, User? user, dynamic role});
+
+  $UserCopyWith<$Res>? get user;
+}
+
+/// @nodoc
+class _$AccountCopyWithImpl<$Res, $Val extends Account>
+    implements $AccountCopyWith<$Res> {
+  _$AccountCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? userId = null,
+    Object? roleId = null,
+    Object? user = freezed,
+    Object? role = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      roleId: null == roleId
+          ? _value.roleId
+          : roleId // ignore: cast_nullable_to_non_nullable
+              as int,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+      role: freezed == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$AccountImplCopyWith<$Res> implements $AccountCopyWith<$Res> {
+  factory _$$AccountImplCopyWith(
+          _$AccountImpl value, $Res Function(_$AccountImpl) then) =
+      __$$AccountImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String id, String userId, int roleId, User? user, dynamic role});
+
+  @override
+  $UserCopyWith<$Res>? get user;
+}
+
+/// @nodoc
+class __$$AccountImplCopyWithImpl<$Res>
+    extends _$AccountCopyWithImpl<$Res, _$AccountImpl>
+    implements _$$AccountImplCopyWith<$Res> {
+  __$$AccountImplCopyWithImpl(
+      _$AccountImpl _value, $Res Function(_$AccountImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? userId = null,
+    Object? roleId = null,
+    Object? user = freezed,
+    Object? role = freezed,
+  }) {
+    return _then(_$AccountImpl(
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == roleId
+          ? _value.roleId
+          : roleId // ignore: cast_nullable_to_non_nullable
+              as int,
+      freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+      freezed == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AccountImpl implements _Account {
+  const _$AccountImpl(this.id, this.userId, this.roleId, this.user, this.role);
+
+  factory _$AccountImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AccountImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String userId;
+  @override
+  final int roleId;
+  @override
+  final User? user;
+  @override
+  final dynamic role;
+
+  @override
+  String toString() {
+    return 'Account(id: $id, userId: $userId, roleId: $roleId, user: $user, role: $role)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AccountImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.roleId, roleId) || other.roleId == roleId) &&
+            (identical(other.user, user) || other.user == user) &&
+            const DeepCollectionEquality().equals(other.role, role));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, userId, roleId, user,
+      const DeepCollectionEquality().hash(role));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AccountImplCopyWith<_$AccountImpl> get copyWith =>
+      __$$AccountImplCopyWithImpl<_$AccountImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AccountImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Account implements Account {
+  const factory _Account(final String id, final String userId, final int roleId,
+      final User? user, final dynamic role) = _$AccountImpl;
+
+  factory _Account.fromJson(Map<String, dynamic> json) = _$AccountImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get userId;
+  @override
+  int get roleId;
+  @override
+  User? get user;
+  @override
+  dynamic get role;
+  @override
+  @JsonKey(ignore: true)
+  _$$AccountImplCopyWith<_$AccountImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
