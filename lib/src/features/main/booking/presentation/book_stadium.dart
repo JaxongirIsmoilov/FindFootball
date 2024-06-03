@@ -264,22 +264,6 @@ class _BookStadiumState extends State<BookStadium> {
                                 ],
                               );
                             }),
-                            // Wrap(
-                            //   spacing: 8.0, // gap between adjacent chips
-                            //   runSpacing: 4.0, // gap between lines
-                            //   children: bookedTimes.map((time) {
-                            //     return Chip(
-                            //       avatar: const Icon(Icons.access_time, size: 20.0),
-                            //       label: ListView.builder(
-                            //           itemCount: time.slotTimes.length,
-                            //           shrinkWrap: true,
-                            //           itemBuilder: (context, i){
-                            //         return Text(time.slotTimes[i].startTime);
-                            //       })
-                            //       //backgroundColor: getTimeColor(time.slotTimes, time.endTime),
-                            //     );
-                            //   }).toList(),
-                            // ),
                           ],
                         )
                       : const Text(
