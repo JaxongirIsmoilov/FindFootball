@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:find_football/src/core/consts/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:location/location.dart';
@@ -61,6 +62,7 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
     locationData = await location.getLocation();
     final lat = locationData.latitude;
     final lng = locationData.longitude;
+
     newPoint = Point(latitude: lat!, longitude: lng!);
     List<geocoding.Placemark> placemarks =
         await geocoding.placemarkFromCoordinates(lat, lng);
@@ -162,8 +164,8 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
           children: [
             TextButton.icon(
               onPressed: _getCurrentLocation,
-              label: const Text('Get current location'),
-              icon: const Icon(Icons.location_on),
+              label: const Text('Get current location', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
+              icon: const Icon(Icons.location_on, size: 14,),
             ),
             TextButton.icon(
               onPressed: () {
@@ -176,8 +178,8 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
                   ),
                 );
               },
-              label: const Text('Select on map'),
-              icon: const Icon(Icons.map),
+              label: const Text('Select on map', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
+              icon: const Icon(Icons.map, size: 14,),
             ),
           ],
         )

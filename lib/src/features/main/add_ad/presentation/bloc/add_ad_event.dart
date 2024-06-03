@@ -9,5 +9,11 @@ abstract class AddAdEvent extends Equatable {
 class AddImageEvent extends AddAdEvent{
  final List<File> images;
 
-  AddImageEvent( {required this.images});
+  const AddImageEvent( {required this.images});
+}
+
+class SelectLocationEvent extends AddAdEvent{
+  final double lat;
+  final double long;
+  const SelectLocationEvent({required this.lat, required this.long});
 }

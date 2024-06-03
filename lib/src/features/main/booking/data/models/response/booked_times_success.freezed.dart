@@ -21,8 +21,7 @@ BookedTimeSuccess _$BookedTimeSuccessFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$BookedTimeSuccess {
   DateTime get date => throw _privateConstructorUsedError;
-  String get startTime => throw _privateConstructorUsedError;
-  String get endTime => throw _privateConstructorUsedError;
+  List<SlotTime> get slotTimes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +35,7 @@ abstract class $BookedTimeSuccessCopyWith<$Res> {
           BookedTimeSuccess value, $Res Function(BookedTimeSuccess) then) =
       _$BookedTimeSuccessCopyWithImpl<$Res, BookedTimeSuccess>;
   @useResult
-  $Res call({DateTime date, String startTime, String endTime});
+  $Res call({DateTime date, List<SlotTime> slotTimes});
 }
 
 /// @nodoc
@@ -53,22 +52,17 @@ class _$BookedTimeSuccessCopyWithImpl<$Res, $Val extends BookedTimeSuccess>
   @override
   $Res call({
     Object? date = null,
-    Object? startTime = null,
-    Object? endTime = null,
+    Object? slotTimes = null,
   }) {
     return _then(_value.copyWith(
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      startTime: null == startTime
-          ? _value.startTime
-          : startTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      endTime: null == endTime
-          ? _value.endTime
-          : endTime // ignore: cast_nullable_to_non_nullable
-              as String,
+      slotTimes: null == slotTimes
+          ? _value.slotTimes
+          : slotTimes // ignore: cast_nullable_to_non_nullable
+              as List<SlotTime>,
     ) as $Val);
   }
 }
@@ -81,7 +75,7 @@ abstract class _$$BookedTimeSuccessImplCopyWith<$Res>
       __$$BookedTimeSuccessImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({DateTime date, String startTime, String endTime});
+  $Res call({DateTime date, List<SlotTime> slotTimes});
 }
 
 /// @nodoc
@@ -96,22 +90,17 @@ class __$$BookedTimeSuccessImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? date = null,
-    Object? startTime = null,
-    Object? endTime = null,
+    Object? slotTimes = null,
   }) {
     return _then(_$BookedTimeSuccessImpl(
       null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      null == startTime
-          ? _value.startTime
-          : startTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == endTime
-          ? _value.endTime
-          : endTime // ignore: cast_nullable_to_non_nullable
-              as String,
+      null == slotTimes
+          ? _value._slotTimes
+          : slotTimes // ignore: cast_nullable_to_non_nullable
+              as List<SlotTime>,
     ));
   }
 }
@@ -119,21 +108,25 @@ class __$$BookedTimeSuccessImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$BookedTimeSuccessImpl implements _BookedTimeSuccess {
-  const _$BookedTimeSuccessImpl(this.date, this.startTime, this.endTime);
+  const _$BookedTimeSuccessImpl(this.date, final List<SlotTime> slotTimes)
+      : _slotTimes = slotTimes;
 
   factory _$BookedTimeSuccessImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookedTimeSuccessImplFromJson(json);
 
   @override
   final DateTime date;
+  final List<SlotTime> _slotTimes;
   @override
-  final String startTime;
-  @override
-  final String endTime;
+  List<SlotTime> get slotTimes {
+    if (_slotTimes is EqualUnmodifiableListView) return _slotTimes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_slotTimes);
+  }
 
   @override
   String toString() {
-    return 'BookedTimeSuccess(date: $date, startTime: $startTime, endTime: $endTime)';
+    return 'BookedTimeSuccess(date: $date, slotTimes: $slotTimes)';
   }
 
   @override
@@ -142,14 +135,14 @@ class _$BookedTimeSuccessImpl implements _BookedTimeSuccess {
         (other.runtimeType == runtimeType &&
             other is _$BookedTimeSuccessImpl &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
-            (identical(other.endTime, endTime) || other.endTime == endTime));
+            const DeepCollectionEquality()
+                .equals(other._slotTimes, _slotTimes));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, date, startTime, endTime);
+  int get hashCode => Object.hash(
+      runtimeType, date, const DeepCollectionEquality().hash(_slotTimes));
 
   @JsonKey(ignore: true)
   @override
@@ -168,7 +161,7 @@ class _$BookedTimeSuccessImpl implements _BookedTimeSuccess {
 
 abstract class _BookedTimeSuccess implements BookedTimeSuccess {
   const factory _BookedTimeSuccess(
-          final DateTime date, final String startTime, final String endTime) =
+          final DateTime date, final List<SlotTime> slotTimes) =
       _$BookedTimeSuccessImpl;
 
   factory _BookedTimeSuccess.fromJson(Map<String, dynamic> json) =
@@ -177,11 +170,162 @@ abstract class _BookedTimeSuccess implements BookedTimeSuccess {
   @override
   DateTime get date;
   @override
+  List<SlotTime> get slotTimes;
+  @override
+  @JsonKey(ignore: true)
+  _$$BookedTimeSuccessImplCopyWith<_$BookedTimeSuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+SlotTime _$SlotTimeFromJson(Map<String, dynamic> json) {
+  return _SlotTime.fromJson(json);
+}
+
+/// @nodoc
+mixin _$SlotTime {
+  String get startTime => throw _privateConstructorUsedError;
+  String get endTime => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SlotTimeCopyWith<SlotTime> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SlotTimeCopyWith<$Res> {
+  factory $SlotTimeCopyWith(SlotTime value, $Res Function(SlotTime) then) =
+      _$SlotTimeCopyWithImpl<$Res, SlotTime>;
+  @useResult
+  $Res call({String startTime, String endTime});
+}
+
+/// @nodoc
+class _$SlotTimeCopyWithImpl<$Res, $Val extends SlotTime>
+    implements $SlotTimeCopyWith<$Res> {
+  _$SlotTimeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? startTime = null,
+    Object? endTime = null,
+  }) {
+    return _then(_value.copyWith(
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$SlotTimeImplCopyWith<$Res>
+    implements $SlotTimeCopyWith<$Res> {
+  factory _$$SlotTimeImplCopyWith(
+          _$SlotTimeImpl value, $Res Function(_$SlotTimeImpl) then) =
+      __$$SlotTimeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String startTime, String endTime});
+}
+
+/// @nodoc
+class __$$SlotTimeImplCopyWithImpl<$Res>
+    extends _$SlotTimeCopyWithImpl<$Res, _$SlotTimeImpl>
+    implements _$$SlotTimeImplCopyWith<$Res> {
+  __$$SlotTimeImplCopyWithImpl(
+      _$SlotTimeImpl _value, $Res Function(_$SlotTimeImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? startTime = null,
+    Object? endTime = null,
+  }) {
+    return _then(_$SlotTimeImpl(
+      null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$SlotTimeImpl implements _SlotTime {
+  const _$SlotTimeImpl(this.startTime, this.endTime);
+
+  factory _$SlotTimeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SlotTimeImplFromJson(json);
+
+  @override
+  final String startTime;
+  @override
+  final String endTime;
+
+  @override
+  String toString() {
+    return 'SlotTime(startTime: $startTime, endTime: $endTime)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SlotTimeImpl &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, startTime, endTime);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SlotTimeImplCopyWith<_$SlotTimeImpl> get copyWith =>
+      __$$SlotTimeImplCopyWithImpl<_$SlotTimeImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SlotTimeImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _SlotTime implements SlotTime {
+  const factory _SlotTime(final String startTime, final String endTime) =
+      _$SlotTimeImpl;
+
+  factory _SlotTime.fromJson(Map<String, dynamic> json) =
+      _$SlotTimeImpl.fromJson;
+
+  @override
   String get startTime;
   @override
   String get endTime;
   @override
   @JsonKey(ignore: true)
-  _$$BookedTimeSuccessImplCopyWith<_$BookedTimeSuccessImpl> get copyWith =>
+  _$$SlotTimeImplCopyWith<_$SlotTimeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

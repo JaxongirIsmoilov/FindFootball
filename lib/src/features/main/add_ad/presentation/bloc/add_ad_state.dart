@@ -15,6 +15,15 @@ class AddImageState extends AddAdState {
   List<Object> get props => [images];
 }
 
+class SelectedLocationState extends AddAdState{
+  Point selectedLocation;
+
+  SelectedLocationState({ required this.selectedLocation});
+  @override
+  List<Object> get props => [selectedLocation];
+
+}
+
 class InitialState extends AddImageState{
   InitialState({required super.images});
 }

@@ -3,6 +3,7 @@ import 'package:find_football/src/core/di/di.dart';
 import 'package:find_football/src/features/main/profile/presentation/widgets/custom_button_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -135,6 +136,11 @@ class _BookStadiumState extends State<BookStadium> {
     }
   }
 
+  String _formatDate(DateTime date){
+    DateFormat formatter = DateFormat('dd-MM-yyyy');
+    return formatter.format(date);
+  }
+
   int calculateGameDurationInHour(
       TimeOfDay gameStartTime, TimeOfDay gameEndTime) {
     int startMinutes = gameStartTime.hour * 60 + gameStartTime.minute;
@@ -241,20 +247,39 @@ class _BookStadiumState extends State<BookStadium> {
                               style: TextStyle(color: AppColors.textColor),
                               textAlign: TextAlign.center,
                             ),
-                            Wrap(
-                              spacing: 8.0, // gap between adjacent chips
-                              runSpacing: 4.0, // gap between lines
-                              children: bookedTimes.map((time) {
-                                return Chip(
-                                  avatar:
-                                      const Icon(Icons.access_time, size: 20.0),
-                                  label: Text(
-                                      "${formatTime(time.startTime)}-${formatTime(time.endTime)}"),
-                                  backgroundColor:
-                                      getTimeColor(time.startTime, time.endTime),
-                                );
-                              }).toList(),
-                            ),
+                            ListView.builder(
+                              shrinkWrap: true,
+                                itemCount: bookedTimes.length, itemBuilder: (context, index)  {
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(_formatDate(bookedTimes[index].date), style: const TextStyle(color: AppColors.red),),
+                                  Wrap(
+                                    spacing: 8.0,
+                                    runSpacing: 4.0,
+                                    children: bookedTimes[index].slotTimes.map((time) {
+                                      return Chip(avatar: const Icon(Icons.access_time, size: 20,), label: Text("${time.startTime}-${time.endTime}"), backgroundColor: getTimeColor(time.startTime, time.endTime),);
+                                    }).toList(),
+                                  ),
+                                ],
+                              );
+                            }),
+                            // Wrap(
+                            //   spacing: 8.0, // gap between adjacent chips
+                            //   runSpacing: 4.0, // gap between lines
+                            //   children: bookedTimes.map((time) {
+                            //     return Chip(
+                            //       avatar: const Icon(Icons.access_time, size: 20.0),
+                            //       label: ListView.builder(
+                            //           itemCount: time.slotTimes.length,
+                            //           shrinkWrap: true,
+                            //           itemBuilder: (context, i){
+                            //         return Text(time.slotTimes[i].startTime);
+                            //       })
+                            //       //backgroundColor: getTimeColor(time.slotTimes, time.endTime),
+                            //     );
+                            //   }).toList(),
+                            // ),
                           ],
                         )
                       : const Text(
