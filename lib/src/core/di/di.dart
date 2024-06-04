@@ -9,6 +9,9 @@ import 'package:find_football/src/features/auth/login/domain/usecase/login_useca
 import 'package:find_football/src/features/auth/register/data/repository/register_repository_impl.dart';
 import 'package:find_football/src/features/auth/register/domain/repository/register_repository.dart';
 import 'package:find_football/src/features/auth/register/domain/usecase/register_usecase.dart';
+import 'package:find_football/src/features/main/add_ad/data/repository/add_ad_repository_impl.dart';
+import 'package:find_football/src/features/main/add_ad/domain/repository/add_ad_repository.dart';
+import 'package:find_football/src/features/main/add_ad/domain/usecase/get_districts_usecase.dart';
 import 'package:find_football/src/features/main/booking/domain/repository/booking_repository.dart';
 import 'package:find_football/src/features/main/booking/domain/usecase/book_stadium_usecase.dart';
 import 'package:find_football/src/features/main/home/data/repository/fetch_all_stadiums_repository_impl.dart';
@@ -62,6 +65,9 @@ Future<void> configureDependencies(Flavor flavorMode) async {
 
   di.registerLazySingleton(() => BookingRepositoryImpl(di()));
   di.registerFactory<BookingRepository>(() => BookingRepositoryImpl(di()));
+
+  di.registerLazySingleton(() => AddAdRepositoryImpl(di()));
+  di.registerFactory<AddAdRepository>(() => AddAdRepositoryImpl(di()));
   //UseCase
   di.registerFactory<RegisterUseCase>(() => RegisterUseCase(di()));
   di.registerFactory<VerifyUseCase>(() => VerifyUseCase(di()));
@@ -72,5 +78,6 @@ Future<void> configureDependencies(Flavor flavorMode) async {
   di.registerFactory<RequestToHostUseCase>(() => RequestToHostUseCase(di()));
   di.registerFactory<BookedTimesUseCase>(() => BookedTimesUseCase(di()));
   di.registerFactory<BookStadiumUseCase>(() => BookStadiumUseCase(di()));
+  di.registerFactory<GetDistrictsUseCase>(() => GetDistrictsUseCase(di()));
 
 }

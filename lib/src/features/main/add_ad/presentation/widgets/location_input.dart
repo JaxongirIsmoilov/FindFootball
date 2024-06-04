@@ -66,12 +66,6 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
     newPoint = Point(latitude: lat!, longitude: lng!);
     List<geocoding.Placemark> placemarks =
         await geocoding.placemarkFromCoordinates(lat, lng);
-
-    print(placemarks.first);
-
-    // imageBytes = await _screenshotController.capture();
-    // print(imageBytes);
-
     setState(() {
       _isGettingLocation = false;
       zoom = 15;
@@ -136,7 +130,6 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
                 ),
               );
               imageBytes = await _screenshotController.capture();
-              print('Image Bits --->  ${imageBytes}');
               mapControllerCompleter.complete(controller);
             },
             zoomGesturesEnabled: true,

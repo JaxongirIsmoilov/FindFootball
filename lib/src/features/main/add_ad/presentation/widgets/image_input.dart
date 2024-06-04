@@ -33,7 +33,7 @@ class _ImageInputState extends State<ImageInput> {
   }
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddAdBloc, AddImageState>(builder: (context, state){
+    return BlocBuilder<AddAdBloc, AddAdState>(builder: (context, state){
       // images.addAll(state.images);
           if(state.images.isEmpty){
         return Padding(

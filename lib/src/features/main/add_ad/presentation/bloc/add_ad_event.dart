@@ -12,6 +12,16 @@ class AddImageEvent extends AddAdEvent{
   const AddImageEvent( {required this.images});
 }
 
+class GetAllDistrictsEvent extends AddAdEvent{
+  final BuildContext context;
+  GetAllDistrictsEvent(this.context);
+}
+
+class SelectDistrictEvent extends AddAdEvent{
+  final DistrictSuccess selectedDistrict;
+  const SelectDistrictEvent(this.selectedDistrict);
+}
+
 class SelectLocationEvent extends AddAdEvent{
   final double lat;
   final double long;
