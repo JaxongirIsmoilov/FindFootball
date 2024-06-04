@@ -28,6 +28,7 @@ mixin _$ProfileSuccess {
   dynamic get homeAddressId => throw _privateConstructorUsedError;
   dynamic get address => throw _privateConstructorUsedError;
   List<Account>? get accounts => throw _privateConstructorUsedError;
+  List<dynamic> get images => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +50,8 @@ abstract class $ProfileSuccessCopyWith<$Res> {
       dynamic age,
       dynamic homeAddressId,
       dynamic address,
-      List<Account>? accounts});
+      List<Account>? accounts,
+      List<dynamic> images});
 }
 
 /// @nodoc
@@ -73,6 +75,7 @@ class _$ProfileSuccessCopyWithImpl<$Res, $Val extends ProfileSuccess>
     Object? homeAddressId = freezed,
     Object? address = freezed,
     Object? accounts = freezed,
+    Object? images = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -107,6 +110,10 @@ class _$ProfileSuccessCopyWithImpl<$Res, $Val extends ProfileSuccess>
           ? _value.accounts
           : accounts // ignore: cast_nullable_to_non_nullable
               as List<Account>?,
+      images: null == images
+          ? _value.images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ) as $Val);
   }
 }
@@ -127,7 +134,8 @@ abstract class _$$ProfileSuccessImplCopyWith<$Res>
       dynamic age,
       dynamic homeAddressId,
       dynamic address,
-      List<Account>? accounts});
+      List<Account>? accounts,
+      List<dynamic> images});
 }
 
 /// @nodoc
@@ -149,6 +157,7 @@ class __$$ProfileSuccessImplCopyWithImpl<$Res>
     Object? homeAddressId = freezed,
     Object? address = freezed,
     Object? accounts = freezed,
+    Object? images = null,
   }) {
     return _then(_$ProfileSuccessImpl(
       null == id
@@ -183,6 +192,10 @@ class __$$ProfileSuccessImplCopyWithImpl<$Res>
           ? _value._accounts
           : accounts // ignore: cast_nullable_to_non_nullable
               as List<Account>?,
+      null == images
+          ? _value._images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ));
   }
 }
@@ -190,9 +203,18 @@ class __$$ProfileSuccessImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ProfileSuccessImpl implements _ProfileSuccess {
-  const _$ProfileSuccessImpl(this.id, this.name, this.phoneNumber, this.gender,
-      this.age, this.homeAddressId, this.address, final List<Account>? accounts)
-      : _accounts = accounts;
+  const _$ProfileSuccessImpl(
+      this.id,
+      this.name,
+      this.phoneNumber,
+      this.gender,
+      this.age,
+      this.homeAddressId,
+      this.address,
+      final List<Account>? accounts,
+      final List<dynamic> images)
+      : _accounts = accounts,
+        _images = images;
 
   factory _$ProfileSuccessImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileSuccessImplFromJson(json);
@@ -221,9 +243,17 @@ class _$ProfileSuccessImpl implements _ProfileSuccess {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<dynamic> _images;
+  @override
+  List<dynamic> get images {
+    if (_images is EqualUnmodifiableListView) return _images;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_images);
+  }
+
   @override
   String toString() {
-    return 'ProfileSuccess(id: $id, name: $name, phoneNumber: $phoneNumber, gender: $gender, age: $age, homeAddressId: $homeAddressId, address: $address, accounts: $accounts)';
+    return 'ProfileSuccess(id: $id, name: $name, phoneNumber: $phoneNumber, gender: $gender, age: $age, homeAddressId: $homeAddressId, address: $address, accounts: $accounts, images: $images)';
   }
 
   @override
@@ -240,7 +270,8 @@ class _$ProfileSuccessImpl implements _ProfileSuccess {
             const DeepCollectionEquality()
                 .equals(other.homeAddressId, homeAddressId) &&
             const DeepCollectionEquality().equals(other.address, address) &&
-            const DeepCollectionEquality().equals(other._accounts, _accounts));
+            const DeepCollectionEquality().equals(other._accounts, _accounts) &&
+            const DeepCollectionEquality().equals(other._images, _images));
   }
 
   @JsonKey(ignore: true)
@@ -254,7 +285,8 @@ class _$ProfileSuccessImpl implements _ProfileSuccess {
       const DeepCollectionEquality().hash(age),
       const DeepCollectionEquality().hash(homeAddressId),
       const DeepCollectionEquality().hash(address),
-      const DeepCollectionEquality().hash(_accounts));
+      const DeepCollectionEquality().hash(_accounts),
+      const DeepCollectionEquality().hash(_images));
 
   @JsonKey(ignore: true)
   @override
@@ -280,7 +312,8 @@ abstract class _ProfileSuccess implements ProfileSuccess {
       final dynamic age,
       final dynamic homeAddressId,
       final dynamic address,
-      final List<Account>? accounts) = _$ProfileSuccessImpl;
+      final List<Account>? accounts,
+      final List<dynamic> images) = _$ProfileSuccessImpl;
 
   factory _ProfileSuccess.fromJson(Map<String, dynamic> json) =
       _$ProfileSuccessImpl.fromJson;
@@ -301,6 +334,8 @@ abstract class _ProfileSuccess implements ProfileSuccess {
   dynamic get address;
   @override
   List<Account>? get accounts;
+  @override
+  List<dynamic> get images;
   @override
   @JsonKey(ignore: true)
   _$$ProfileSuccessImplCopyWith<_$ProfileSuccessImpl> get copyWith =>

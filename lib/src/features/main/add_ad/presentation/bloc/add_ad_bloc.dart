@@ -1,10 +1,16 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:equatable/equatable.dart';
+import 'package:find_football/src/core/router/router.gr.dart';
+import 'package:find_football/src/core/services/hive_service.dart';
 import 'package:find_football/src/core/utils/pop_up_modal.dart';
+import 'package:find_football/src/features/main/add_ad/data/models/request/stadium_request.dart';
+import 'package:find_football/src/features/main/add_ad/domain/usecase/add_ad_usecase.dart';
 import 'package:find_football/src/features/main/add_ad/domain/usecase/get_districts_usecase.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
@@ -28,12 +34,53 @@ class AddAdBloc extends Bloc<AddAdEvent, AddAdState> {
     });
 
     on<SelectDistrictEvent>((event, emit) {
-        selectDistrict(event, emit);
+      selectDistrict(event, emit);
+    });
+
+    on<AddAdButtonEvent>((event, emit) async {
+      await addAnnouncement(event, emit);
     });
   }
 
-  void selectDistrict(SelectDistrictEvent event, Emitter<AddAdState> emit){
-    emit(SelectedDistrictState(selectedDistrict: event.selectedDistrict),);
+  final _addAdUseCase = di<AddAdUseCase>();
+
+  Future<void> addAnnouncement(
+      AddAdButtonEvent event, Emitter<AddAdState> emit) async {
+    await _addAdUseCase
+        .execute(
+          context: event.context,
+          stadiumRequest: StadiumRequest(
+            name: event.name,
+            images: event.images,
+            ownerAccountId: await HiveService.getAccountId(),
+            longitude: event.locationLongitude,
+            latitude: event.locationLatitude,
+            details: event.details,
+            workEndingHour: event.workEndHour,
+            districtId: event.districtId,
+            priceAmount: event.priceAmount,
+            priceCurrency: event.priceCurrency,
+            workStartHour: event.workStartHour,
+          ),
+        )
+        .then(
+          (value) => value.fold(
+            (l) {
+              popUp(event.context, error: l.message);
+              emit(ExceptionState(message: l.message));
+            },
+            (r) {
+              event.context.replaceRoute(HomeView());
+            },
+          ),
+        );
+  }
+
+  void selectDistrict(SelectDistrictEvent event, Emitter<AddAdState> emit) {
+    emit(InitialState());
+    emit(
+      SelectedDistrictState(selectedDistrict: event.selectedDistrict),
+    );
   }
 
   final _fetchAllDistrictsUseCase = di<GetDistrictsUseCase>();
@@ -47,7 +94,9 @@ class AddAdBloc extends Bloc<AddAdEvent, AddAdState> {
               emit(ExceptionState(message: l.message));
             },
             (r) {
-              emit(GetAllDistrictsState(districts: r),);
+              emit(
+                GetAllDistrictsState(districts: r),
+              );
             },
           ),
         );

@@ -26,7 +26,7 @@ import 'package:find_football/src/features/main/favotire/presentation/favorite.d
 import 'package:find_football/src/features/main/history/presentation/history.dart'
     as _i4;
 import 'package:find_football/src/features/main/home/data/models/response/all_stadiums_success.dart'
-    as _i16;
+    as _i17;
 import 'package:find_football/src/features/main/home/presentation/home.dart'
     as _i5;
 import 'package:find_football/src/features/main/profile/data/models/response/profile_success.dart'
@@ -39,8 +39,8 @@ import 'package:find_football/src/features/onboard/presentation/onboarding_page.
     as _i9;
 import 'package:find_football/src/features/splash/presentation/splash.dart'
     as _i13;
-import 'package:flutter/cupertino.dart' as _i17;
-import 'package:flutter/material.dart' as _i15;
+import 'package:flutter/cupertino.dart' as _i15;
+import 'package:flutter/material.dart' as _i16;
 
 abstract class $AppRouter extends _i14.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -188,7 +188,7 @@ class AddAdViewArgs {
 /// [_i2.ConfirmCodeView]
 class ConfirmCodeView extends _i14.PageRouteInfo<ConfirmCodeViewArgs> {
   ConfirmCodeView({
-    _i15.Key? key,
+    _i16.Key? key,
     required String phoneNumber,
     List<_i14.PageRouteInfo>? children,
   }) : super(
@@ -212,7 +212,7 @@ class ConfirmCodeViewArgs {
     required this.phoneNumber,
   });
 
-  final _i15.Key? key;
+  final _i16.Key? key;
 
   final String phoneNumber;
 
@@ -268,8 +268,8 @@ class HomeView extends _i14.PageRouteInfo<void> {
 /// [_i6.ItemDetailsView]
 class ItemDetailsView extends _i14.PageRouteInfo<ItemDetailsViewArgs> {
   ItemDetailsView({
-    _i15.Key? key,
-    required _i16.AllStadiumsSuccess allStadiumsSuccess,
+    _i16.Key? key,
+    required _i17.AllStadiumsSuccess allStadiumsSuccess,
     required String address,
     List<_i14.PageRouteInfo>? children,
   }) : super(
@@ -295,9 +295,9 @@ class ItemDetailsViewArgs {
     required this.address,
   });
 
-  final _i15.Key? key;
+  final _i16.Key? key;
 
-  final _i16.AllStadiumsSuccess allStadiumsSuccess;
+  final _i17.AllStadiumsSuccess allStadiumsSuccess;
 
   final String address;
 
@@ -353,7 +353,7 @@ class OnBoardingView extends _i14.PageRouteInfo<void> {
 /// [_i10.ProfileView]
 class ProfileView extends _i14.PageRouteInfo<ProfileViewArgs> {
   ProfileView({
-    _i17.Key? key,
+    _i15.Key? key,
     required _i18.ProfileSuccess profileSuccess,
     required bool isUserHost,
     List<_i14.PageRouteInfo>? children,
@@ -380,7 +380,7 @@ class ProfileViewArgs {
     required this.isUserHost,
   });
 
-  final _i17.Key? key;
+  final _i15.Key? key;
 
   final _i18.ProfileSuccess profileSuccess;
 

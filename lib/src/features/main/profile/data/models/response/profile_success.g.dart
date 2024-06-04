@@ -18,6 +18,7 @@ _$ProfileSuccessImpl _$$ProfileSuccessImplFromJson(Map<String, dynamic> json) =>
       (json['accounts'] as List<dynamic>?)
           ?.map((e) => Account.fromJson(e as Map<String, dynamic>))
           .toList(),
+      json['images'] as List<dynamic>,
     );
 
 Map<String, dynamic> _$$ProfileSuccessImplToJson(
@@ -31,6 +32,7 @@ Map<String, dynamic> _$$ProfileSuccessImplToJson(
       'homeAddressId': instance.homeAddressId,
       'address': instance.address,
       'accounts': instance.accounts,
+      'images': instance.images,
     };
 
 _$AccountImpl _$$AccountImplFromJson(Map<String, dynamic> json) =>

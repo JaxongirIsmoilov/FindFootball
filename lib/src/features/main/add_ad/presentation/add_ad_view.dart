@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:find_football/src/core/consts/colors/app_colors.dart';
 import 'package:find_football/src/core/di/di.dart';
 import 'package:find_football/src/core/utils/dialogs.dart';
+import 'package:find_football/src/core/utils/pop_up_modal.dart';
 import 'package:find_football/src/core/widgets/custom_button.dart';
 import 'package:find_football/src/features/auth/login/widgets/custom_text_field.dart';
 import 'package:find_football/src/features/main/add_ad/data/models/place.dart';
@@ -38,8 +39,13 @@ class _AddAdViewState extends State<AddAdView> {
   late List<String> districtsNameList;
   TimeOfDay? workStartTime;
   TimeOfDay? workEndTime;
+  String? lat;
+  String? long;
   late final PlaceLocation? _placeLocation;
   late final List<File>? _selectedImages;
+  late String selectedValue = '';
+  late String selectedValueId = '';
+  late bool isDropdownOpen = false;
 
   @override
   void initState() {
@@ -103,6 +109,11 @@ class _AddAdViewState extends State<AddAdView> {
               }
               if (state is GetAllDistrictsState) {
                 districtsList.addAll(state.districts);
+                selectedValue = districtsList.first.name;
+              }
+              if (state is SelectedDistrictState) {
+                selectedValue = state.selectedDistrict.name;
+                selectedValueId = state.selectedDistrict.id;
               }
 
               return SingleChildScrollView(
@@ -226,17 +237,22 @@ class _AddAdViewState extends State<AddAdView> {
                           height: 15,
                         ),
                         CustomDropDown(
-                            districts: districtsList.map((district) => district.name).toList(),
-                            onChanged: (value) {
-                              for (var i = 0; i <= districtsList.length; i++) {
-                                if (districtsList[i].name == value) {
-                                  di<AddAdBloc>().add(
-                                    SelectDistrictEvent(districtsList[i]),
-                                  );
-                                  break;
-                                }
+                          districts: districtsList
+                              .map((district) => district.name)
+                              .toList(),
+                          onChanged: (value) {
+                            for (var i = 0; i <= districtsList.length; i++) {
+                              if (districtsList[i].name == value) {
+                                di<AddAdBloc>().add(
+                                  SelectDistrictEvent(districtsList[i]),
+                                );
+                                break;
                               }
-                            }),
+                            }
+                          },
+                          selectedValue: selectedValue,
+                          isDropdownOpen: isDropdownOpen,
+                        ),
                         const SizedBox(
                           height: 15,
                         ),
@@ -276,7 +292,9 @@ class _AddAdViewState extends State<AddAdView> {
                           ),
                         ),
 
-                        const SizedBox(height: 15,),
+                        const SizedBox(
+                          height: 15,
+                        ),
                         Container(
                           height: 55,
                           width: MediaQuery.of(context).size.width / 1.12,
@@ -339,7 +357,29 @@ class _AddAdViewState extends State<AddAdView> {
                             color: AppColors.buttonColor,
                             text: "Submit",
                             textColor: AppColors.white,
-                            onTap: () {})
+                            onTap: () {
+                              if(_placeLocation != null && workStartTime != null && workEndTime != null ){
+                                di<AddAdBloc>().add(
+                                  AddAdButtonEvent(
+                                    context: context,
+                                    name: _stadiumName.text,
+                                    priceCurrency: _priceCurrency.text,
+                                    priceAmount: double.parse(_priceAmount.text),
+                                    locationLatitude: _placeLocation.latitude,
+                                    locationLongitude: _placeLocation.longitude,
+                                    workStartHour:
+                                    formatTimeOfDay(workStartTime!),
+                                    workEndHour: formatTimeOfDay(workEndTime!),
+                                    districtId: selectedValueId,
+                                    details: _stadiumDetails.text,
+                                    images: state.images,
+                                  ),
+                                );
+                              }else {
+                                popUp(context, error: 'Please fill up all fields first!!!');
+                              }
+
+                            })
                       ],
                     ),
                   ),

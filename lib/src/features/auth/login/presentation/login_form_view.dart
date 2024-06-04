@@ -118,6 +118,7 @@ class _LoginFormViewState extends State<LoginFormView> {
                               controller: _passwordController,
                               keyboardType: TextInputType.visiblePassword,
                               obscureText: _isPasswordObsecure,
+                              style: const TextStyle(color: AppColors.textColor),
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 suffixIcon: _passwordController.text.isNotEmpty

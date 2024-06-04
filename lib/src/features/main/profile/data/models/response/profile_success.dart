@@ -14,6 +14,7 @@ class ProfileSuccess with _$ProfileSuccess {
   dynamic homeAddressId,
   dynamic address,
   List<Account>? accounts,
+  List<dynamic> images,
       ) = _ProfileSuccess;
 
   factory ProfileSuccess.fromJson(Map<String, dynamic> json) =>
@@ -23,11 +24,11 @@ class ProfileSuccess with _$ProfileSuccess {
 @freezed
 class Account with _$Account {
   const factory Account(
-  String id,
-  String userId,
-  int roleId,
-  ProfileSuccess user,
-  Role role,
+      String id,
+      String userId,
+      int roleId,
+      ProfileSuccess user,
+      Role role,
       ) = _Account;
 
   factory Account.fromJson(Map<String, dynamic> json) =>

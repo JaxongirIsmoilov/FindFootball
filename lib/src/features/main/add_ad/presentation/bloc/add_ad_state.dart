@@ -1,14 +1,14 @@
 part of 'add_ad_bloc.dart';
 
 abstract class AddAdState extends Equatable {
-  List<File> images = [];
+  List<XFile> images = [];
   @override
   List<Object?> get props => [images];
 }
 
 class AddImageState extends AddAdState {
 
-  List<File> images;
+  List<XFile> images;
 
   AddImageState({required this.images });
 
@@ -35,6 +35,10 @@ class GetAllDistrictsState extends AddAdState{
   GetAllDistrictsState({required this.districts});
   @override
   List<Object> get props => [districts];
+}
+
+class AddAdButtonState extends AddAdState{
+
 }
 
 class InitialState extends AddAdState{

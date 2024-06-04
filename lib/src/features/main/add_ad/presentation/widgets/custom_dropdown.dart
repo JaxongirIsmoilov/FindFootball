@@ -6,11 +6,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/add_ad_bloc.dart';
 
 class CustomDropDown extends StatefulWidget {
-  CustomDropDown({super.key, required this.districts, required this.onChanged});
+  final String selectedValue;
+  final bool isDropdownOpen;
+  CustomDropDown(
+      {super.key,
+      required this.districts,
+      required this.onChanged,
+      required this.selectedValue,
+      required this.isDropdownOpen});
 
   final List<String> districts;
   final Function(String? value) onChanged;
-  String? selectedValue = '';
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();
@@ -18,91 +24,72 @@ class CustomDropDown extends StatefulWidget {
 
 class _CustomDropDownState extends State<CustomDropDown> {
   @override
-  void initState() {
-    if (widget.selectedValue == null ||
-        !widget.districts.contains(widget.selectedValue)) {
-      widget.selectedValue =
-          widget.districts.isNotEmpty ? widget.districts[0] : 'Please choose district';
-    }
-    super.initState();
-  }
-
-  bool isDropdownOpen = false;
-
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddAdBloc, AddAdState>(
-      builder: (context, state) {
-        if(state is SelectedDistrictState){
-          widget.selectedValue = state.selectedDistrict.name;
-        }
-        return Container(
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          margin: const EdgeInsets.only(left: 10, right: 10),
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: AppColors.textEditingBackgroundColor,
-            border: Border.all(color: AppColors.cardColor),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      margin: const EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: AppColors.textEditingBackgroundColor,
+        border: Border.all(color: AppColors.cardColor),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton2<String>(
+          dropdownStyleData: DropdownStyleData(
+            direction: DropdownDirection.right,
+            maxHeight: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+            ),
+            width: MediaQuery.of(context).size.width - 32,
+            offset: const Offset(-12, 268),
           ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton2<String>(
-              dropdownStyleData: DropdownStyleData(
-                direction: DropdownDirection.right,
-                maxHeight: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                width: MediaQuery.of(context).size.width - 32,
-                offset: const Offset(-12, 268),
-              ),
-              isExpanded: true,
-              hint: Text(
-                "Select district which stadium is located",
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-              onMenuStateChange: (bool isDropdownOpen) {
-                setState(() {
-                  this.isDropdownOpen = isDropdownOpen;
-                });
-              },
-              items: widget.districts
-                  .map((String item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                      ))
-                  .toList(),
-              value: widget.selectedValue,
-              onChanged: (value) {
-                // setState(() {
-                //   widget.selectedValue = value;
-                // });
-                widget.onChanged(value);
-              },
-              buttonStyleData: ButtonStyleData(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                height: 60,
-                width: 140,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              ),
-              menuItemStyleData: MenuItemStyleData(
-                customHeights: List<double>.generate(
-                    widget.districts.length, (index) => 48),
-              ),
-              iconStyleData: const IconStyleData(
-                icon: Icon(Icons.arrow_downward_sharp),
-                openMenuIcon: Icon(Icons.arrow_drop_up),
-              ),
+          isExpanded: true,
+          hint: Text(
+            "Select district which stadium is located",
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+          // onMenuStateChange: (bool isDropdownOpen) {
+          //   // setState(() {
+          //   //   this.isDropdownOpen = isDropdownOpen;
+          //   // });
+          // },
+          items: widget.districts
+              .map((String item) => DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  ))
+              .toList(),
+          value: widget.selectedValue,
+          onChanged: (value) {
+            // setState(() {
+            //   widget.selectedValue = value;
+            // });
+            widget.onChanged(value);
+          },
+          buttonStyleData: ButtonStyleData(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            height: 60,
+            width: 140,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
             ),
           ),
-        );
-      },
+          menuItemStyleData: MenuItemStyleData(
+            customHeights:
+                List<double>.generate(widget.districts.length, (index) => 48),
+          ),
+          iconStyleData: const IconStyleData(
+            icon: Icon(Icons.arrow_downward_sharp),
+            openMenuIcon: Icon(Icons.arrow_drop_up),
+          ),
+        ),
+      ),
     );
   }
 }

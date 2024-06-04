@@ -17,13 +17,10 @@ class ImageInput extends StatefulWidget {
 
 class _ImageInputState extends State<ImageInput> {
 
-    late List<File> images = [];
+    late List<XFile> images = [];
   void selectImage() async {
     final List<XFile> selectedImages = await ImagePicker().pickMultiImage();
-
-    for(var i =0; i< selectedImages.length; i++){
-      images.add(File(selectedImages[i].path));
-    }
+    images.addAll(selectedImages);
 
     if(context.mounted){
       context.read<AddAdBloc>().add(AddImageEvent(images: images));
