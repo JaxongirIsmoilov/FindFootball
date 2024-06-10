@@ -5,6 +5,8 @@ import 'package:find_football/src/features/auth/login/presentation/login_bloc/lo
 import 'package:find_football/src/features/auth/register/presentation/register_bloc/register_bloc.dart';
 import 'package:find_football/src/features/main/add_ad/presentation/bloc/add_ad_bloc.dart';
 import 'package:find_football/src/features/main/booking/presentation/bloc/booking_bloc.dart';
+import 'package:find_football/src/features/main/favotire/presentation/bloc/favorite_bloc.dart';
+import 'package:find_football/src/features/main/favotire/presentation/bloc/favorite_bloc.dart';
 import 'package:find_football/src/features/main/home/presentation/bloc/home_bloc.dart';
 import 'package:find_football/src/features/main/profile/presentation/bloc/profile_bloc.dart';
 import 'package:find_football/src/features/main/root/presentation/bloc/root_bloc.dart';
@@ -78,6 +80,9 @@ class App extends StatelessWidget with WidgetsBindingObserver {
             ),
             BlocProvider<BookingBloc>.value(
               value: di.get<BookingBloc>(),
+            ),
+            BlocProvider<FavoriteBloc>.value(
+              value: di.get<FavoriteBloc>(),
             ),
           ],
           child: BlocProvider<ThemeCubit>(

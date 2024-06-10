@@ -4,23 +4,27 @@ import 'package:auto_route/auto_route.dart';
 import 'package:find_football/src/core/consts/colors/app_colors.dart';
 import 'package:find_football/src/core/consts/icons/app_icons.dart';
 import 'package:find_football/src/features/main/details/data/models/features_model.dart';
+import 'package:find_football/src/features/main/details/presentation/bloc/item_details_bloc.dart';
 import 'package:find_football/src/features/main/details/presentation/widgets/details_image_slider.dart';
 import 'package:find_football/src/features/main/home/data/models/response/all_stadiums_success.dart';
 import 'package:find_football/src/features/main/profile/presentation/widgets/custom_button_pref.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
+import '../../../../core/di/di.dart';
 import '../../booking/presentation/book_stadium.dart';
 
 @RoutePage()
 class ItemDetailsView extends StatefulWidget {
   final AllStadiumsSuccess allStadiumsSuccess;
   final String address;
+  bool isFavorite;
 
-  const ItemDetailsView(
-      {super.key, required this.allStadiumsSuccess, required this.address});
+   ItemDetailsView(
+      {super.key, required this.allStadiumsSuccess, required this.address, required this.isFavorite});
 
   @override
   State<ItemDetailsView> createState() => _ItemDetailsViewState();
@@ -148,11 +152,11 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                         ),
                       ],
                     ),
-                    child: const Center(
-                        child: Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      size: 20,
-                    )),
+                    child: Image.asset(
+                      AppIcons.back,
+                      height: 20,
+                      width: 20,
+                    ),
                   ),
                 ),
                 const Spacer(),
@@ -183,25 +187,33 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                 const SizedBox(
                   width: 16,
                 ),
-                Container(
-                  height: 38,
-                  width: 38,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0x0D000000),
-                        blurRadius: 12,
-                        offset: Offset(0, 6),
-                      ),
-                    ],
-                  ),
-                  child: Image.asset(
-                    AppIcons.likeIconBorder,
-                    height: 20,
-                    width: 20,
+                GestureDetector(
+                  onTap: (){
+                    di<ItemDetailsBloc>().add(SaveStadiumToFavorite(widget.allStadiumsSuccess.id),);
+                    setState(() {
+                      widget.isFavorite = true;
+                    });
+                  },
+                  child: Container(
+                    height: 38,
+                    width: 38,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0x0D000000),
+                          blurRadius: 12,
+                          offset: Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: Image.asset(
+                      widget.isFavorite ? AppIcons.liked : AppIcons.notLiked,
+                      height: 20,
+                      width: 20,
+                    ),
                   ),
                 ),
               ],

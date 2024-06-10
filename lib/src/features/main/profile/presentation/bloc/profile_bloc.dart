@@ -4,7 +4,6 @@ import 'package:find_football/src/features/main/profile/domain/usecase/request_t
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../data/models/request/request_to_host.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';

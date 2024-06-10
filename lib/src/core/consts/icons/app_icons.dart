@@ -18,9 +18,7 @@ class AppIcons{
   static const String footballIcon = 'assets/icons/futbol_icon.png';
   static const String summerTime = 'assets/icons/summer_time.png';
   static const String location = 'assets/icons/location.png';
-  static const String likeIconBorder = 'assets/icons/likelike_icon_border.png';
-  static const String likeIconFilled = 'assets/icons/likelike_icon_filled.png';
-  static const String shareIcon = 'assets/icons/share_icon.png';
+  static const String shareIcon = 'assets/icons/share.png';
   static const String routeIcon = 'assets/icons/route_icon.png';
   static const String carParkingIcon = 'assets/icons/car_parking.png';
   static const String changingRoomIcon = 'assets/icons/changing_room.png';
@@ -39,5 +37,7 @@ class AppIcons{
   static const String removeIcon = 'assets/icons/remove_icon.png';
   static const String adIcon = 'assets/icons/ad_icon.png';
   static const String avatarImage = 'assets/icons/avatart.svg';
-
+  static const String notLiked = 'assets/icons/not_liked.png';
+  static const String liked = 'assets/icons/liked.png';
+  static const String back = 'assets/icons/back.png';
 }

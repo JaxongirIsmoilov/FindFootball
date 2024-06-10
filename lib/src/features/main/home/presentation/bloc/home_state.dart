@@ -18,6 +18,15 @@ class FetchedAllStadiumsState extends HomeState{
   @override
   List<Object?> get props => [allStadiumsSuccess];
 }
+
+class FetchedAllFavoriteStadiumsState extends HomeState{
+  final List<SavedStadiumsSuccess> savedStadiums;
+
+  FetchedAllFavoriteStadiumsState({required this.savedStadiums});
+  @override
+  List<Object?> get props => [savedStadiums];
+}
+
 class ExceptionState extends HomeState {
   final String message;
   ExceptionState({required this.message});

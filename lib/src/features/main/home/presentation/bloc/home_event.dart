@@ -10,3 +10,7 @@ class FetchAllStadiumsEvent extends HomeEvent{
   final BuildContext context;
   const FetchAllStadiumsEvent({required this.context});
 }
+
+class FetchAllFavoriteStadiumsEvent extends HomeEvent{
+
+}

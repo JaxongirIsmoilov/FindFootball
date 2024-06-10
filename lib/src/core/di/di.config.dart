@@ -19,6 +19,10 @@ import '../../features/auth/register/presentation/register_bloc/register_bloc.da
     as _i4;
 import '../../features/main/add_ad/presentation/bloc/add_ad_bloc.dart' as _i9;
 import '../../features/main/booking/presentation/bloc/booking_bloc.dart' as _i7;
+import '../../features/main/details/presentation/bloc/item_details_bloc.dart'
+    as _i12;
+import '../../features/main/favotire/presentation/bloc/favorite_bloc.dart'
+    as _i11;
 import '../../features/main/home/presentation/bloc/home_bloc.dart' as _i6;
 import '../../features/main/profile/presentation/bloc/profile_bloc.dart' as _i8;
 import '../../features/main/root/presentation/bloc/root_bloc.dart' as _i10;
@@ -42,5 +46,7 @@ _i1.GetIt $initGetIt(
   gh.lazySingleton<_i8.ProfileBloc>(() => _i8.ProfileBloc());
   gh.lazySingleton<_i9.AddAdBloc>(() => _i9.AddAdBloc());
   gh.lazySingleton<_i10.RootBloc>(() => _i10.RootBloc());
+  gh.lazySingleton<_i11.FavoriteBloc>(() => _i11.FavoriteBloc());
+  gh.lazySingleton<_i12.ItemDetailsBloc>(() => _i12.ItemDetailsBloc());
   return getIt;
 }

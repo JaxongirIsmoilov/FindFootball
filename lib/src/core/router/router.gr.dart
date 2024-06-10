@@ -93,6 +93,7 @@ abstract class $AppRouter extends _i14.RootStackRouter {
           key: args.key,
           allStadiumsSuccess: args.allStadiumsSuccess,
           address: args.address,
+          isFavorite: args.isFavorite,
         ),
       );
     },
@@ -268,9 +269,10 @@ class HomeView extends _i14.PageRouteInfo<void> {
 /// [_i6.ItemDetailsView]
 class ItemDetailsView extends _i14.PageRouteInfo<ItemDetailsViewArgs> {
   ItemDetailsView({
-    _i16.Key? key,
+    _i15.Key? key,
     required _i17.AllStadiumsSuccess allStadiumsSuccess,
     required String address,
+    required bool isFavorite,
     List<_i14.PageRouteInfo>? children,
   }) : super(
           ItemDetailsView.name,
@@ -278,6 +280,7 @@ class ItemDetailsView extends _i14.PageRouteInfo<ItemDetailsViewArgs> {
             key: key,
             allStadiumsSuccess: allStadiumsSuccess,
             address: address,
+            isFavorite: isFavorite,
           ),
           initialChildren: children,
         );
@@ -293,17 +296,20 @@ class ItemDetailsViewArgs {
     this.key,
     required this.allStadiumsSuccess,
     required this.address,
+    required this.isFavorite,
   });
 
-  final _i16.Key? key;
+  final _i15.Key? key;
 
   final _i17.AllStadiumsSuccess allStadiumsSuccess;
 
   final String address;
 
+  final bool isFavorite;
+
   @override
   String toString() {
-    return 'ItemDetailsViewArgs{key: $key, allStadiumsSuccess: $allStadiumsSuccess, address: $address}';
+    return 'ItemDetailsViewArgs{key: $key, allStadiumsSuccess: $allStadiumsSuccess, address: $address, isFavorite: $isFavorite}';
   }
 }
 

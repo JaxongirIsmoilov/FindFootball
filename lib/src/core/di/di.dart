@@ -15,6 +15,13 @@ import 'package:find_football/src/features/main/add_ad/domain/usecase/add_ad_use
 import 'package:find_football/src/features/main/add_ad/domain/usecase/get_districts_usecase.dart';
 import 'package:find_football/src/features/main/booking/domain/repository/booking_repository.dart';
 import 'package:find_football/src/features/main/booking/domain/usecase/book_stadium_usecase.dart';
+import 'package:find_football/src/features/main/details/data/repository/details_repository_impl.dart';
+import 'package:find_football/src/features/main/details/domain/repository/details_repository.dart';
+import 'package:find_football/src/features/main/details/domain/usecase/add_favorite_usecase.dart';
+import 'package:find_football/src/features/main/details/domain/usecase/remove_from_favorite_usecase.dart';
+import 'package:find_football/src/features/main/favotire/data/repository/favorite_repository_impl.dart';
+import 'package:find_football/src/features/main/favotire/domain/repository/favorite_repository.dart';
+import 'package:find_football/src/features/main/favotire/domain/usecase/get_all_favorite.dart';
 import 'package:find_football/src/features/main/home/data/repository/fetch_all_stadiums_repository_impl.dart';
 import 'package:find_football/src/features/main/home/domain/repository/fetch_all_stadiums_repository.dart';
 import 'package:find_football/src/features/main/home/domain/usecase/fetch_all_stadiums_usecase.dart';
@@ -69,6 +76,12 @@ Future<void> configureDependencies(Flavor flavorMode) async {
 
   di.registerLazySingleton(() => AddAdRepositoryImpl(di()));
   di.registerFactory<AddAdRepository>(() => AddAdRepositoryImpl(di()));
+
+  di.registerLazySingleton(() => DetailsRepositoryImpl(di()));
+  di.registerFactory<DetailsRepository>(() => DetailsRepositoryImpl(di()));
+
+  di.registerLazySingleton(() => FavoriteRepositoryImpl(di()));
+  di.registerFactory<FavoriteRepository>(() => FavoriteRepositoryImpl(di()));
   //UseCase
   di.registerFactory<RegisterUseCase>(() => RegisterUseCase(di()));
   di.registerFactory<VerifyUseCase>(() => VerifyUseCase(di()));
@@ -81,5 +94,7 @@ Future<void> configureDependencies(Flavor flavorMode) async {
   di.registerFactory<BookStadiumUseCase>(() => BookStadiumUseCase(di()));
   di.registerFactory<GetDistrictsUseCase>(() => GetDistrictsUseCase(di()));
   di.registerFactory<AddAdUseCase>(() => AddAdUseCase(di()));
-
+  di.registerFactory<GetAllFavoriteUseCase>(() => GetAllFavoriteUseCase(di()));
+  di.registerFactory<AddFavoriteUseCase>(() => AddFavoriteUseCase(di()));
+  di.registerFactory<RemoveFromFavoriteUseCase>(() => RemoveFromFavoriteUseCase(di()));
 }
