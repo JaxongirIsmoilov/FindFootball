@@ -33,14 +33,39 @@ class BookStadium extends StatefulWidget {
 
 class _BookStadiumState extends State<BookStadium> {
   DateTimeRange? selectedDateRange;
+  DateTime? singleDate;
   DateTime? startTime;
   DateTime? endTime;
   late List<BookedTimeSuccess> bookedTimes = [];
-  bool isPicked = false;
+  bool isSinglePicked = false;
+  bool isRangePicked = false;
   DateTime? gameDate;
   TimeOfDay? gameStartTime;
   TimeOfDay? gameEndTime;
   bool isTimePicked = false;
+
+  void _openSingleDatePicker() async {
+    await showDatePicker(
+      context: context,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+    ).then((value) {
+      setState(() {
+        if (value != null && value != gameDate) {
+          singleDate = value;
+          isSinglePicked = true;
+        }
+        di<BookingBloc>().add(
+          GetAllBookedTimes(
+            context: context,
+            stadiumId: widget.stadiumId,
+            startTime: value!,
+            endTime: value,
+          ),
+        );
+      });
+    });
+  }
 
   void _openDateRangePicker() async {
     DateTime now = DateTime.now();
@@ -54,7 +79,7 @@ class _BookStadiumState extends State<BookStadium> {
           selectedDateRange = value;
           startTime = value.start;
           endTime = value.end;
-          isPicked = true;
+          isRangePicked = true;
         });
       }
       di<BookingBloc>().add(
@@ -136,7 +161,7 @@ class _BookStadiumState extends State<BookStadium> {
     }
   }
 
-  String _formatDate(DateTime date){
+  String _formatDate(DateTime date) {
     DateFormat formatter = DateFormat('dd-MM-yyyy');
     return formatter.format(date);
   }
@@ -159,7 +184,8 @@ class _BookStadiumState extends State<BookStadium> {
   @override
   void dispose() {
     bookedTimes = [];
-    isPicked = false;
+    isRangePicked = false;
+    isSinglePicked = false;
     isTimePicked = false;
     super.dispose();
   }
@@ -187,8 +213,100 @@ class _BookStadiumState extends State<BookStadium> {
                   height: 30,
                 ),
                 const Text(
-                  'Choose a date which dates you want to book',
+                  'Choose a date which date you want to book',
                   style: TextStyle(color: AppColors.textColor),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  height: 55,
+                  width: MediaQuery.of(context).size.width / 1.12,
+                  // color: Colors.grey,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        selectedDateRange == null
+                            ? "Date that you wanted to choose"
+                            : singleDate!.toLocal().toString().split(' ')[0],
+                        style: TextStyle(color: Colors.grey.shade900),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          _openSingleDatePicker();
+                        },
+                        icon: const Icon(CupertinoIcons.calendar),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                if (isSinglePicked)
+                  bookedTimes.isNotEmpty
+                      ? Column(
+                          children: [
+                            const Text(
+                              "Times are showed below is booked, Please choose except this times",
+                              style: TextStyle(color: AppColors.textColor),
+                              textAlign: TextAlign.center,
+                            ),
+                            ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: bookedTimes.length,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        _formatDate(bookedTimes[index].date),
+                                        style: const TextStyle(
+                                            color: AppColors.red),
+                                      ),
+                                      Wrap(
+                                        spacing: 8.0,
+                                        runSpacing: 4.0,
+                                        children: bookedTimes[index]
+                                            .slotTimes
+                                            .map((time) {
+                                          return Chip(
+                                            avatar: const Icon(
+                                              Icons.access_time,
+                                              size: 20,
+                                            ),
+                                            label: Text(
+                                                "${time.startTime}-${time.endTime}"),
+                                            backgroundColor: getTimeColor(
+                                                time.startTime, time.endTime),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ],
+                                  );
+                                }),
+                          ],
+                        )
+                      : const Text(
+                          "There is no reservation range that you picked.You can reserve in working times",
+                          style: TextStyle(color: AppColors.textColor),
+                          textAlign: TextAlign.center,
+                        ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text(
+                  'Check If date ranges is picked! Choose a date which dates you want to book',
+                  style: TextStyle(color: AppColors.textColor),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(
                   height: 20,
@@ -238,7 +356,7 @@ class _BookStadiumState extends State<BookStadium> {
                 const SizedBox(
                   height: 15,
                 ),
-                if (isPicked)
+                if (isRangePicked)
                   bookedTimes.isNotEmpty
                       ? Column(
                           children: [
@@ -248,22 +366,38 @@ class _BookStadiumState extends State<BookStadium> {
                               textAlign: TextAlign.center,
                             ),
                             ListView.builder(
-                              shrinkWrap: true,
-                                itemCount: bookedTimes.length, itemBuilder: (context, index)  {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(_formatDate(bookedTimes[index].date), style: const TextStyle(color: AppColors.red),),
-                                  Wrap(
-                                    spacing: 8.0,
-                                    runSpacing: 4.0,
-                                    children: bookedTimes[index].slotTimes.map((time) {
-                                      return Chip(avatar: const Icon(Icons.access_time, size: 20,), label: Text("${time.startTime}-${time.endTime}"), backgroundColor: getTimeColor(time.startTime, time.endTime),);
-                                    }).toList(),
-                                  ),
-                                ],
-                              );
-                            }),
+                                shrinkWrap: true,
+                                itemCount: bookedTimes.length,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        _formatDate(bookedTimes[index].date),
+                                        style: const TextStyle(
+                                            color: AppColors.red),
+                                      ),
+                                      Wrap(
+                                        spacing: 8.0,
+                                        runSpacing: 4.0,
+                                        children: bookedTimes[index]
+                                            .slotTimes
+                                            .map((time) {
+                                          return Chip(
+                                            avatar: const Icon(
+                                              Icons.access_time,
+                                              size: 20,
+                                            ),
+                                            label: Text(
+                                                "${time.startTime}-${time.endTime}"),
+                                            backgroundColor: getTimeColor(
+                                                time.startTime, time.endTime),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ],
+                                  );
+                                }),
                           ],
                         )
                       : const Text(
@@ -324,7 +458,7 @@ class _BookStadiumState extends State<BookStadium> {
                 const SizedBox(
                   height: 15,
                 ),
-                isPicked
+                isSinglePicked || isRangePicked
                     ? Container(
                         height: 55,
                         width: MediaQuery.of(context).size.width / 1.12,
@@ -346,7 +480,10 @@ class _BookStadiumState extends State<BookStadium> {
                             Text(
                               gameDate == null
                                   ? "Date"
-                                  : gameDate!.toLocal().toString().split(' ')[0],
+                                  : gameDate!
+                                      .toLocal()
+                                      .toString()
+                                      .split(' ')[0],
                               style: TextStyle(color: Colors.grey.shade900),
                             ),
                             IconButton(
@@ -354,8 +491,8 @@ class _BookStadiumState extends State<BookStadium> {
                                 _openDatePicker();
                                 // di<BookingBloc>().add(GetAllBookedTimes(context: context, stadiumId: widget.stadiumId, startTime: startTime!, endTime: endTime!, ),);
                               },
-                              icon:
-                                  const Icon(CupertinoIcons.calendar_badge_plus),
+                              icon: const Icon(
+                                  CupertinoIcons.calendar_badge_plus),
                             ),
                           ],
                         ),
@@ -364,7 +501,7 @@ class _BookStadiumState extends State<BookStadium> {
                 const SizedBox(
                   height: 15,
                 ),
-                isPicked
+                isSinglePicked || isRangePicked
                     ? Container(
                         height: 55,
                         width: MediaQuery.of(context).size.width / 1.12,
@@ -403,7 +540,7 @@ class _BookStadiumState extends State<BookStadium> {
                 const SizedBox(
                   height: 15,
                 ),
-                isPicked
+                isSinglePicked || isRangePicked
                     ? Container(
                         height: 55,
                         width: MediaQuery.of(context).size.width / 1.12,

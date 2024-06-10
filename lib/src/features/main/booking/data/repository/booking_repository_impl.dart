@@ -8,6 +8,7 @@ import 'package:find_football/src/features/main/booking/data/models/response/boo
 import 'package:find_football/src/features/main/booking/data/models/response/booked_times_success.dart';
 import 'package:find_football/src/features/main/booking/domain/repository/booking_repository.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../core/http/api_service.dart';
 
@@ -26,18 +27,8 @@ class BookingRepositoryImpl extends BookingRepository {
       var response = await apiService.get(
         endPoint: '/stadiums/$stadiumId/slots',
         params: {
-          "startDate":{
-            "year": startTime.year.toString(),
-            "month": startTime.month.toString().padLeft(2, '0'),
-            "day": startTime.day.toString().padLeft(2, '0'),
-            "dayOfWeek": startTime.weekday
-          },
-          "endDate":{
-            "year": endTime.year.toString(),
-            "month": endTime.month.toString().padLeft(2, '0'),
-            "day": endTime.day.toString().padLeft(2, '0'),
-            "dayOfWeek": endTime.weekday
-          },
+          "startDate": DateFormat("yyyy-MM-dd").format(startTime),
+          "endDate": DateFormat("yyyy-MM-dd").format(endTime),
         },
         data: stadiumId,
       );
