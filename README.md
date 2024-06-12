@@ -7,8 +7,9 @@ This is a app which helps to find football fields near you
 This project is a starting point for a Flutter application.
 
 ## Run this codes after cloning project 
-flutter pub get;
-flutter packages pub run build_runner build --delete-conflicting-outputs;
+flutter pub get
+
+flutter packages pub run build_runner build --delete-conflicting-outputs
 
 A few resources to get you started if this is your first Flutter project:
 
